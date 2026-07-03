@@ -1,1012 +1,1044 @@
-// PROJETO HORIZONTE - CORE JS ENGINE
-// Desenvolvido para Júlia Aragão
+// ============================================================
+// PROJETO HORIZONTE v2.0 — APP.JS
+// Motor de gestão financeira completo para Júlia Aragão
+// ============================================================
 
-// Global state variables
+// ---- ESTADO GLOBAL ----
 let state = {
+  // Cap 3: Livro Caixa
+  caixa: [],
+
+  // Cap 4: Salários e Extras
+  salaryHistory: [],
+  extras: [],
   config: {
-    salary: 1600.90,
     carol: 450.00,
-    naturaExtra: 150.00,
-    fixedExpensesBeforeOct26: 450.00,
-    fixedExpensesAfterOct26: 350.00,
-    sporadicExpenses: 200.00
+    naturaExtra: 150.00
   },
-  debts: {
-    mila: 300.00,
-    vitinho: 250.00,
-    papis: 400.00,
-    chica: 350.00,
-    installment: 55.00 // R$ 50 to R$ 60
-  },
-  naturaOrders: [
-    { id: 1, client: "Mariana Silva", product: "Perfume Kaiak", price: 149.90, date: "2026-06-15", status: "Entregue" },
-    { id: 2, client: "Carlos Souza", product: "Creme TodoDia", price: 59.90, date: "2026-06-20", status: "Entregue" },
-    { id: 3, client: "Ana Santos", product: "Desodorante Humor", price: 39.90, date: "2026-07-01", status: "Pendente" }
-  ],
-  victorGoals: [
-    { id: 1, text: "Viagem de Fim de Ano (Praia)", completed: false },
-    { id: 2, text: "Jantar Especial de Comemoração", completed: true }
-  ],
-  victorNotes: "Planejar a viagem com calma para dezembro de 2027.",
-  careerNotes: "Gostaria de começar atendendo clientes de estética aos finais de semana para testar aceitação e aumentar a renda extra.",
+
+  // Cap 5: Dívidas
+  debtInitial: { Solange: 1743.98, Mila: 300.00, Vitinho: 250.00, Papis: 400.00, Chica: 350.00 },
+  debtPayments: [],
+
+  // Cap 7: Investimentos
+  investments: [],
+
+  // Cap 8: Intercâmbio
+  exchangePlan: { destName:'', duration:12, rate:6.50, currency:'EUR' },
+  exchangeCosts: {},
+  exchangeInvestments: [],
+
+  // Cap 9: Carreira
+  careerNotes: '',
+
+  // Cap 10: Natura
+  naturaOrders: [],
+
+  // Cap 13: Fluxo de compras
+  purchases: [],
+
+  // Cap 11: Victor
+  victorExpenses: [],
+  victorCofrinho: [],
+
+  // Cap 12: Diário
   diary: {
     mood: [
-      { id: 1, title: "Praia em Malta", url: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=300&q=80" },
-      { id: 2, title: "Estudo e Foco", url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=300&q=80" },
-      { id: 3, title: "Independência Financeira", url: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=300&q=80" }
+      { id: 1, title: 'Praia em Malta', url: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=300&q=80' },
+      { id: 2, title: 'Estudo e Foco', url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=300&q=80' },
+      { id: 3, title: 'Independência', url: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=300&q=80' }
     ],
     gratitude: [
-      { id: 1, date: "Janeiro de 2026", text: "Consegui pagar a fatura menor sem atrasos." },
-      { id: 2, date: "Fevereiro de 2026", text: "Fiz uma ótima comissão na Natura este mês." }
+      { id: 1, date: 'Janeiro de 2026', text: 'Consegui pagar a fatura sem atrasos.' },
+      { id: 2, date: 'Fevereiro de 2026', text: 'Boa comissão na Natura este mês.' }
     ],
-    learnings: "O Tesouro IPCA+ é excelente para o intercâmbio porque protege meu poder de compra contra a inflação nos próximos anos.",
-    ideas: "Criar pacotes promocionais de depilação + design de sobrancelha para formandas e noivas."
+    learnings: 'O Tesouro IPCA+ protege meu poder de compra contra a inflação nos próximos anos.',
+    ideas: 'Criar pacotes de depilação + design de sobrancelha para formandas e noivas.'
   }
 };
 
-// Available exchange destinations details
-const destinations = {
-  Malta: { name: "Malta", flag: "🇲🇹", cost: 60000, duration: "6 meses", language: "Inglês", ease: "Fácil (Schengen)", desc: "Destino ensolarado na Europa, excelente custo-benefício para inglês." },
-  Ireland: { name: "Irlanda", flag: "🇮🇪", cost: 75000, duration: "8 meses", language: "Inglês", ease: "Médio (Permite trabalhar)", desc: "Possibilidade de trabalhar meio período enquanto estuda." },
-  CapeVerde: { name: "Cabo Verde", flag: "🇨🇻", cost: 35000, duration: "3 meses", language: "Português/Crioulo", ease: "Muito Fácil", desc: "Opção econômica e culturalmente rica na África." },
-  SouthAfrica: { name: "África do Sul", flag: "🇿🇦", cost: 48000, duration: "6 meses", language: "Inglês", ease: "Fácil", desc: "Custo de vida muito baixo e cenários de tirar o fôlego." },
-  Italy: { name: "Itália", flag: "🇮🇹", cost: 72000, duration: "6 meses", language: "Italiano", ease: "Médio", desc: "Imersão cultural e histórica no coração da Europa." },
-  France: { name: "França", flag: "🇫🇷", cost: 85000, duration: "6 meses", language: "Francês", ease: "Médio", desc: "Estudos de alto padrão e vivência no idioma mais charmoso." }
-};
+// Charts
+let invChartPie=null, invChartBar=null, invChartLine=null, invChartHist=null, vicChart=null;
 
-// Charts variables
-let cashflowChart = null;
-let portfolioChart = null;
-
-// Initialize app
-document.addEventListener("DOMContentLoaded", () => {
-  loadFromLocalStorage();
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  setupSidebar();
   setupEventListeners();
-  calculateAndRender();
+  renderAll();
   lucide.createIcons();
 });
 
-// Setup event listeners for tabs and buttons
-function setupEventListeners() {
-  // Sidebar navigation
-  document.querySelectorAll(".chapter-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const targetPage = btn.getAttribute("data-target");
-      switchTab(targetPage);
+// ============================================================
+// SIDEBAR — Universal Drawer
+// ============================================================
+function setupSidebar() {
+  const sidebar    = document.getElementById('sidebar');
+  const overlay    = document.getElementById('sidebar-overlay');
+  const menuToggle = document.getElementById('menu-toggle');
+  const closeBtn   = document.getElementById('close-sidebar');
+
+  function openSidebar() {
+    sidebar.classList.add('sidebar-open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('sidebar-open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  menuToggle.addEventListener('click', openSidebar);
+  closeBtn.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close after selecting a chapter
+  document.querySelectorAll('.chapter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchTab(btn.getAttribute('data-target'));
+      closeSidebar();
     });
   });
-
-  // Budget settings
-  document.getElementById("btn-save-cfg").addEventListener("click", () => {
-    state.config.salary = parseFloat(document.getElementById("cfg-salary").value) || 0;
-    state.config.carol = parseFloat(document.getElementById("cfg-carol").value) || 0;
-    state.config.naturaExtra = parseFloat(document.getElementById("cfg-natura-extra").value) || 0;
-    state.config.fixedExpensesAfterOct26 = parseFloat(document.getElementById("cfg-fixed-expenses").value) || 0;
-    state.config.sporadicExpenses = parseFloat(document.getElementById("cfg-sporadic-expenses").value) || 0;
-    
-    saveToLocalStorage();
-    calculateAndRender();
-    alert("Parâmetros do orçamento atualizados com sucesso!");
-  });
-
-  // Debts settings
-  document.getElementById("btn-save-debts").addEventListener("click", () => {
-    state.debts.mila = parseFloat(document.getElementById("debt-mila").value) || 0;
-    state.debts.vitinho = parseFloat(document.getElementById("debt-vitinho").value) || 0;
-    state.debts.papis = parseFloat(document.getElementById("debt-papis").value) || 0;
-    state.debts.chica = parseFloat(document.getElementById("debt-chica").value) || 0;
-    state.debts.installment = parseFloat(document.getElementById("debt-monthly-installment").value) || 55;
-
-    saveToLocalStorage();
-    calculateAndRender();
-    alert("Configuração de dívidas atualizada!");
-  });
-
-  // slider for emergency fund
-  const slider = document.getElementById("reserve-monthly-slider");
-  if(slider) {
-    slider.addEventListener("input", (e) => {
-      document.getElementById("reserve-slider-val").textContent = `R$ ${e.target.value}`;
-      updateReserveCalculations();
-    });
-  }
-
-  // exchange selection
-  const countrySelect = document.getElementById("intercambio-country-select");
-  if(countrySelect) {
-    countrySelect.addEventListener("change", updateExchangeSimulation);
-  }
-  const monthlySavingsInput = document.getElementById("intercambio-monthly-savings");
-  if(monthlySavingsInput) {
-    monthlySavingsInput.addEventListener("input", updateExchangeSimulation);
-  }
-
-  // career notes
-  document.getElementById("btn-save-career-notes").addEventListener("click", () => {
-    state.careerNotes = document.getElementById("career-notes").value;
-    saveToLocalStorage();
-    alert("Anotações de carreira salvas!");
-  });
-
-  // Shared Victor metier
-  document.getElementById("btn-add-victor-goal").addEventListener("click", () => {
-    const text = document.getElementById("victor-goal-input").value.trim();
-    if(text) {
-      state.victorGoals.push({ id: Date.now(), text, completed: false });
-      document.getElementById("victor-goal-input").value = "";
-      saveToLocalStorage();
-      renderVictorGoals();
-    }
-  });
-
-  document.getElementById("btn-save-victor-notes").addEventListener("click", () => {
-    state.victorNotes = document.getElementById("victor-shared-notes").value;
-    saveToLocalStorage();
-    alert("Recados do Espaço Victor salvos!");
-  });
-
-  // Learnings/Ideas save
-  document.getElementById("btn-save-learnings").addEventListener("click", () => {
-    state.diary.learnings = document.getElementById("learnings-textarea").value;
-    saveToLocalStorage();
-    alert("Aprendizados salvos!");
-  });
-  document.getElementById("btn-save-ideas").addEventListener("click", () => {
-    state.diary.ideas = document.getElementById("ideas-textarea").value;
-    saveToLocalStorage();
-    alert("Ideias salvas!");
-  });
-
-  // Backup Export
-  document.getElementById("btn-export-backup").addEventListener("click", exportBackupData);
 }
 
-// Switch chapter active views
+// ============================================================
+// TAB NAVIGATION
+// ============================================================
 function switchTab(pageId) {
-  document.querySelectorAll(".book-page").forEach(page => page.classList.remove("active"));
-  document.querySelectorAll(".chapter-btn").forEach(btn => btn.classList.remove("active"));
-  
-  const targetPage = document.getElementById(pageId);
-  if(targetPage) targetPage.classList.add("active");
-  
-  const targetBtn = document.querySelector(`.chapter-btn[data-target="${pageId}"]`);
-  if(targetBtn) targetBtn.classList.add("active");
+  document.querySelectorAll('.book-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+  const page = document.getElementById(pageId);
+  if (page) page.classList.add('active');
+  const btn = document.querySelector(`.chapter-btn[data-target="${pageId}"]`);
+  if (btn) btn.classList.add('active');
+  lucide.createIcons();
 }
 
-// Switch inner tabs in Chapter 12
-function switchDiaryTab(tabName) {
-  document.querySelectorAll(".diary-section").forEach(sec => sec.style.display = "none");
-  document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-  
-  document.getElementById(`diary-${tabName}`).style.display = "block";
-  
-  // set tab active styles
-  event.target.classList.add("active");
+function switchDiaryTab(tabName, event) {
+  document.querySelectorAll('.diary-section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const sec = document.getElementById(`diary-${tabName}`);
+  if (sec) sec.style.display = 'block';
+  if (event && event.target) event.target.classList.add('active');
 }
 
-// Format numbers as currency R$
-function formatCurrency(val) {
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
+// ============================================================
+// FORMATTERS
+// ============================================================
+function fmt(val) {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val || 0);
+}
+function fmtDate(dateStr) {
+  if (!dateStr) return '—';
+  const [y,m,d] = dateStr.split('-');
+  return `${d}/${m}/${y}`;
+}
+function genId() { return Date.now() + Math.floor(Math.random()*1000); }
+
+// ============================================================
+// LOCAL STORAGE
+// ============================================================
+const STORAGE_KEY = 'projeto_horizonte_v2';
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-// LocalStorage helpers
-function saveToLocalStorage() {
-  localStorage.setItem("projeto_horizonte_state", JSON.stringify(state));
-}
-
-function loadFromLocalStorage() {
-  const local = localStorage.getItem("projeto_horizonte_state");
-  if(local) {
-    try {
-      state = JSON.parse(local);
-      
-      // Update form values with loaded state
-      document.getElementById("cfg-salary").value = state.config.salary;
-      document.getElementById("cfg-carol").value = state.config.carol;
-      document.getElementById("cfg-natura-extra").value = state.config.naturaExtra;
-      document.getElementById("cfg-fixed-expenses").value = state.config.fixedExpensesAfterOct26;
-      document.getElementById("cfg-sporadic-expenses").value = state.config.sporadicExpenses;
-
-      document.getElementById("debt-mila").value = state.debts.mila;
-      document.getElementById("debt-vitinho").value = state.debts.vitinho;
-      document.getElementById("debt-papis").value = state.debts.papis;
-      document.getElementById("debt-chica").value = state.debts.chica;
-      document.getElementById("debt-monthly-installment").value = state.debts.installment;
-      
-      document.getElementById("career-notes").value = state.careerNotes || "";
-      document.getElementById("victor-shared-notes").value = state.victorNotes || "";
-      document.getElementById("learnings-textarea").value = state.diary.learnings || "";
-      document.getElementById("ideas-textarea").value = state.diary.ideas || "";
-    } catch(e) {
-      console.error("Error loading local storage state", e);
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+      // ensure nested objects
+      state.diary = { ...state.diary, ...parsed.diary };
+      state.config = { ...state.config, ...(parsed.config||{}) };
+      state.debtInitial = { ...state.debtInitial, ...(parsed.debtInitial||{}) };
+      state.exchangePlan = { ...state.exchangePlan, ...(parsed.exchangePlan||{}) };
     }
+  } catch(e) {
+    console.error('Erro ao carregar estado:', e);
   }
+  // restore form values
+  const el = (id) => document.getElementById(id);
+  if (el('cfg-carol'))       el('cfg-carol').value       = state.config.carol;
+  if (el('cfg-natura-extra')) el('cfg-natura-extra').value = state.config.naturaExtra;
+  if (el('career-notes'))    el('career-notes').value    = state.careerNotes || '';
+  if (el('learnings-textarea')) el('learnings-textarea').value = state.diary.learnings || '';
+  if (el('ideas-textarea'))     el('ideas-textarea').value     = state.diary.ideas     || '';
 }
 
-// Main financial simulation engine (Jan 2026 to Dec 2030)
-let timeline = [];
-function simulateCashflow() {
-  timeline = [];
-  const startYear = 2026;
-  const endYear = 2030;
-  
-  // Dívidas control
-  let currentMila = state.debts.mila;
-  let currentVitinho = state.debts.vitinho;
-  let currentPapis = state.debts.papis;
-  let currentChica = state.debts.chica;
-  const installment = state.debts.installment;
+// ============================================================
+// SETUP EVENT LISTENERS
+// ============================================================
+function setupEventListeners() {
+  const on = (id, ev, fn) => { const el = document.getElementById(id); if(el) el.addEventListener(ev, fn); };
 
-  let accumulatedBalance = 0; // starts at 0, assumes red balance is cleared or we calculate real accumulation
+  // Backup
+  on('btn-export-backup', 'click', exportBackup);
 
-  const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  // Cap 3: Livro Caixa
+  on('btn-add-caixa', 'click', addCaixa);
 
-  for (let year = startYear; year <= endYear; year++) {
-    for (let monthIdx = 0; monthIdx < 12; monthIdx++) {
-      const monthStr = `${monthNames[monthIdx]}/${year}`;
-      
-      // Determine if date is before/after Oct 2026 for fixed expenses
-      const isAfterOct26 = (year > 2026) || (year === 2026 && monthIdx >= 9); // Oct is 9 (0-indexed)
-      const fixedExp = isAfterOct26 ? state.config.fixedExpensesAfterOct26 : state.config.fixedExpensesBeforeOct26;
-      
-      // Sporadic expenses
-      const sporadicExp = state.config.sporadicExpenses;
+  // Cap 4: Salário + Extras
+  on('btn-add-salary', 'click', addSalary);
+  on('btn-add-extra', 'click', addExtra);
+  on('btn-save-cfg-fixed', 'click', saveCfgFixed);
 
-      // Titia Solange debt: 7 installments from Jul/26 to Jan/27
-      let solangePay = 0;
-      const isSolangePeriod = (year === 2026 && monthIdx >= 6) || (year === 2027 && monthIdx === 0);
-      if (isSolangePeriod) {
-        solangePay = 249.14;
-      }
+  // Cap 5: Dívidas
+  on('btn-add-debt-pay', 'click', addDebtPayment);
 
-      // Other debts payment: starts Sept/2026
-      let milaPay = 0;
-      let vitinhoPay = 0;
-      let papisPay = 0;
-      let chicaPay = 0;
+  // Cap 6: Reserva slider
+  on('reserve-monthly-slider', 'input', () => {
+    const v = document.getElementById('reserve-monthly-slider').value;
+    document.getElementById('reserve-slider-val').textContent = `R$ ${v}`;
+    updateReserveCalc();
+  });
 
-      const isDebtsActive = (year > 2026) || (year === 2026 && monthIdx >= 8); // September is 8 (0-indexed)
-      
-      if (isDebtsActive) {
-        if (currentMila > 0) {
-          milaPay = Math.min(installment, currentMila);
-          currentMila -= milaPay;
-        }
-        if (currentVitinho > 0) {
-          vitinhoPay = Math.min(installment, currentVitinho);
-          currentVitinho -= vitinhoPay;
-        }
-        if (currentPapis > 0) {
-          papisPay = Math.min(installment, currentPapis);
-          currentPapis -= papisPay;
-        }
-        if (currentChica > 0) {
-          chicaPay = Math.min(installment, currentChica);
-          currentChica -= chicaPay;
-        }
-      }
+  // Cap 7: Investimentos
+  on('btn-add-inv', 'click', addInvestment);
 
-      const totalOthersPay = milaPay + vitinhoPay + papisPay + chicaPay;
+  // Cap 8: Intercâmbio
+  on('btn-calc-exchange', 'click', calcExchange);
+  on('btn-add-exc-inv', 'click', addExchangeInv);
 
-      // Revenues
-      const salary = state.config.salary;
-      const carol = state.config.carol;
-      
-      // 13th salary: Nov (50%) & Dec (50%)
-      let thirteenth = 0;
-      if (monthIdx === 10 || monthIdx === 11) {
-        thirteenth = 1600.90 / 2; // R$ 800,45
-      }
+  // Cap 9: Carreira
+  on('btn-save-career-notes', 'click', () => {
+    state.careerNotes = document.getElementById('career-notes').value;
+    saveState();
+    showToast('Anotações de carreira salvas!');
+  });
 
-      // Extra / Natura
-      const naturaExtra = state.config.naturaExtra;
+  // Cap 10: Natura
+  on('btn-add-natura', 'click', addNaturaOrder);
 
-      const totalRevenue = salary + carol + thirteenth + naturaExtra;
-      const totalExpenses = fixedExp + sporadicExp + solangePay + totalOthersPay;
-      
-      const netMonthly = totalRevenue - totalExpenses;
-      accumulatedBalance += netMonthly;
+  // Cap 13: Compras
+  on('btn-add-purchase', 'click', addPurchase);
 
-      timeline.push({
-        monthStr,
-        year,
-        monthIdx,
-        revenue: totalRevenue,
-        salary,
-        carol,
-        thirteenth,
-        naturaExtra,
-        fixedExp,
-        sporadicExp,
-        solangePay,
-        othersPay: totalOthersPay,
-        milaPay,
-        vitinhoPay,
-        papisPay,
-        chicaPay,
-        netMonthly,
-        accumulatedBalance
-      });
-    }
-  }
+  // Cap 11: Victor
+  on('btn-add-vic-exp', 'click', addVictorExpense);
+  on('btn-add-vic-cof', 'click', addVictorCofrinho);
+
+  // Cap 12: Diário
+  on('btn-save-learnings', 'click', () => { state.diary.learnings = document.getElementById('learnings-textarea').value; saveState(); showToast('Aprendizados salvos!'); });
+  on('btn-save-ideas',     'click', () => { state.diary.ideas     = document.getElementById('ideas-textarea').value;     saveState(); showToast('Ideias salvas!'); });
 }
 
-// Calculate, update UI elements, charts
-function calculateAndRender() {
-  simulateCashflow();
-
-  // Update KPIs
-  const currentAccumulated = timeline[timeline.length - 1].accumulatedBalance;
-  const statusKpi = document.getElementById("general-status-value");
-  statusKpi.textContent = formatCurrency(currentAccumulated);
-  if(currentAccumulated < 0) {
-    statusKpi.className = "kpi-value value-negative";
-  } else {
-    statusKpi.className = "kpi-value value-positive";
-  }
-
-  const remainingDebts = calculateRemainingDebts();
-  document.getElementById("debts-total-value").textContent = formatCurrency(remainingDebts);
-  
-  // Calculate Emergency Fund progress
-  const reserveProgressVal = Math.max(0, Math.min(6000, currentAccumulated));
-  document.getElementById("reserve-progress-value").textContent = formatCurrency(reserveProgressVal);
-  document.getElementById("reserve-current-value").textContent = formatCurrency(reserveProgressVal);
-
-  // Render Table
-  renderCashflowTable();
-  
-  // Render Debts chapter details
-  renderDebtsTimeline();
-
-  // Render Destinations
-  renderDestinations();
-
-  // Update Reserve Calculations
-  updateReserveCalculations();
-
-  // Update Exchange Simulation page
-  updateExchangeSimulation();
-
-  // Render Natura Chapter
-  renderNaturaOrders();
-
-  // Render Victor Goals
-  renderVictorGoals();
-
-  // Render Diary
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderAll() {
+  renderCaixaTable();
+  renderCaixaSummary();
+  renderSalaryHistory();
+  updateSalaryKPIs();
+  renderExtrasTable();
+  renderDebtBalances();
+  renderDebtHistory();
+  updateReserveCalc();
+  renderInvestments();
+  renderInvestmentCharts();
+  updateExchangeDisplay();
+  renderExchangeHistory();
+  renderNaturaTable();
+  renderPurchasesTable();
+  renderVictorHistory();
+  renderVictorChart();
+  renderVictorCofrinhoTotal();
   renderMoodboard();
   renderGratitude();
-
-  // Render Charts
-  renderCharts();
+  updateCapaKPIs();
+  lucide.createIcons();
 }
 
-function calculateRemainingDebts() {
-  return state.debts.mila + state.debts.vitinho + state.debts.papis + state.debts.chica + (7 * 249.14);
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  let toast = document.getElementById('toast-notify');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-notify';
+    toast.style.cssText = `
+      position:fixed;bottom:1.5rem;right:1.5rem;
+      background:var(--color-primary-dark);color:#fff;
+      padding:0.75rem 1.5rem;border-radius:8px;
+      border-left:4px solid var(--color-accent);
+      font-size:0.875rem;font-weight:500;z-index:9999;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2);
+      transition:all 0.3s;
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+  }, 2500);
 }
 
-function renderCashflowTable() {
-  const tbody = document.getElementById("cashflow-table-body");
-  tbody.innerHTML = "";
+// ============================================================
+// CAP 3: LIVRO CAIXA
+// ============================================================
+function addCaixa() {
+  const type = document.getElementById('caixa-type').value;
+  const date = document.getElementById('caixa-date').value;
+  const desc = document.getElementById('caixa-desc').value.trim();
+  const val  = parseFloat(document.getElementById('caixa-val').value) || 0;
 
-  timeline.forEach(m => {
-    const tr = document.createElement("tr");
+  if (!date || !desc || val <= 0) { showToast('Preencha todos os campos corretamente.'); return; }
 
-    // highlight if negative
-    const netClass = m.netMonthly >= 0 ? "value-positive" : "value-negative";
-    const accClass = m.accumulatedBalance >= 0 ? "value-positive" : "value-negative";
+  state.caixa.push({ id: genId(), type, date, desc, val });
+  // clear
+  document.getElementById('caixa-date').value = '';
+  document.getElementById('caixa-desc').value = '';
+  document.getElementById('caixa-val').value  = '';
+  saveState();
+  renderCaixaTable();
+  renderCaixaSummary();
+  updateCapaKPIs();
+  showToast('Transação registrada!');
+  lucide.createIcons();
+}
 
+function deleteCaixa(id) {
+  state.caixa = state.caixa.filter(c => c.id !== id);
+  saveState(); renderCaixaTable(); renderCaixaSummary(); updateCapaKPIs();
+}
+
+function renderCaixaTable() {
+  const tbody = document.getElementById('caixa-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const sorted = [...state.caixa].sort((a,b) => new Date(b.date) - new Date(a.date));
+  sorted.forEach(c => {
+    const isIn = c.type === 'receita';
+    const badgeClass = `badge-${c.type}`;
+    const typeLabel = c.type === 'receita' ? '🟢 Receita' : c.type === 'despesa' ? '🔴 Despesa' : '🔵 Cartão';
+    const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><strong>${m.monthStr}</strong></td>
-      <td>${formatCurrency(m.salary)}</td>
-      <td>${formatCurrency(m.carol)}</td>
-      <td>${m.thirteenth > 0 ? formatCurrency(m.thirteenth) : "-"}</td>
-      <td>${formatCurrency(m.naturaExtra)}</td>
-      <td>${formatCurrency(m.fixedExp)}</td>
-      <td>${formatCurrency(m.sporadicExp)}</td>
-      <td>${m.othersPay > 0 ? formatCurrency(m.othersPay) : "-"}</td>
-      <td>${m.solangePay > 0 ? formatCurrency(m.solangePay) : "-"}</td>
-      <td class="${netClass}">${formatCurrency(m.netMonthly)}</td>
-      <td class="${accClass}">${formatCurrency(m.accumulatedBalance)}</td>
+      <td>${fmtDate(c.date)}</td>
+      <td><span class="badge-country ${badgeClass}">${typeLabel}</span></td>
+      <td>${c.desc}</td>
+      <td class="${isIn ? 'value-positive' : 'value-negative'}">${isIn ? '+' : '-'}${fmt(c.val)}</td>
+      <td><button onclick="deleteCaixa(${c.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-function renderDebtsTimeline() {
-  const div = document.getElementById("debts-timeline-results");
-  const tbody = document.getElementById("debts-table-body");
-  tbody.innerHTML = "";
+function renderCaixaSummary() {
+  const totalIn  = state.caixa.filter(c => c.type === 'receita').reduce((s,c) => s + c.val, 0);
+  const totalOut = state.caixa.filter(c => c.type !== 'receita').reduce((s,c) => s + c.val, 0);
+  const saldo    = totalIn - totalOut;
 
-  // find when they finish
-  let solangeDone = null;
-  let milaDone = null;
-  let vitinhoDone = null;
-  let papisDone = null;
-  let chicaDone = null;
+  const set = (id, val, cls) => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = val; if (cls) el.className = cls; }
+  };
+  set('caixa-total-in',  fmt(totalIn));
+  set('caixa-total-out', fmt(totalOut));
+  const saldoEl = document.getElementById('caixa-saldo');
+  if (saldoEl) {
+    saldoEl.textContent = fmt(saldo);
+    saldoEl.style.color = saldo >= 0 ? '#1b8a5a' : '#c0392b';
+  }
+}
 
-  let runningMila = state.debts.mila;
-  let runningVitinho = state.debts.vitinho;
-  let runningPapis = state.debts.papis;
-  let runningChica = state.debts.chica;
+// ============================================================
+// CAP 4: SALÁRIO & EXTRAS
+// ============================================================
+function addSalary() {
+  const month = document.getElementById('salary-month').value;
+  const val   = parseFloat(document.getElementById('cfg-salary-add').value) || 0;
+  if (!month || val <= 0) { showToast('Informe o mês e o valor do salário.'); return; }
 
-  timeline.forEach(m => {
-    // Fill debts table
-    if(m.solangePay > 0 || m.othersPay > 0) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td><strong>${m.monthStr}</strong></td>
-        <td>${m.solangePay > 0 ? formatCurrency(m.solangePay) : "-"}</td>
-        <td>${m.milaPay > 0 ? formatCurrency(m.milaPay) : "-"}</td>
-        <td>${m.vitinhoPay > 0 ? formatCurrency(m.vitinhoPay) : "-"}</td>
-        <td>${m.papisPay > 0 ? formatCurrency(m.papisPay) : "-"}</td>
-        <td>${m.chicaPay > 0 ? formatCurrency(m.chicaPay) : "-"}</td>
-        <td><strong>${formatCurrency(m.solangePay + m.othersPay)}</strong></td>
-      `;
-      tbody.appendChild(tr);
+  // update or add
+  const idx = state.salaryHistory.findIndex(s => s.month === month);
+  if (idx >= 0) {
+    state.salaryHistory[idx].val = val;
+  } else {
+    state.salaryHistory.push({ month, val });
+  }
+  document.getElementById('cfg-salary-add').value = '';
+  saveState(); renderSalaryHistory(); updateSalaryKPIs();
+  showToast('Salário registrado!');
+  lucide.createIcons();
+}
+
+function deleteSalary(month) {
+  state.salaryHistory = state.salaryHistory.filter(s => s.month !== month);
+  saveState(); renderSalaryHistory(); updateSalaryKPIs();
+}
+
+function renderSalaryHistory() {
+  const tbody = document.getElementById('salary-history-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const sorted = [...state.salaryHistory].sort((a,b) => a.month < b.month ? 1 : -1);
+  sorted.forEach(s => {
+    const tr = document.createElement('tr');
+    const [y,m] = s.month.split('-');
+    const label = `${m}/${y}`;
+    tr.innerHTML = `<td>${label}</td><td class="value-positive">${fmt(s.val)}</td>
+      <td><button onclick="deleteSalary('${s.month}')" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateSalaryKPIs() {
+  const vals = state.salaryHistory.map(s => s.val);
+  const avg = vals.length ? vals.reduce((a,b) => a+b, 0) / vals.length : 0;
+  const proj13 = avg; // full 13th = avg salary (paid in 2 halves in Nov and Dec)
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = fmt(v); };
+  set('avg-salary-val', avg);
+  set('proj-13-val', proj13);
+}
+
+function saveCfgFixed() {
+  state.config.carol       = parseFloat(document.getElementById('cfg-carol').value) || 0;
+  state.config.naturaExtra = parseFloat(document.getElementById('cfg-natura-extra').value) || 0;
+  saveState(); showToast('Receitas fixas salvas!');
+}
+
+function addExtra() {
+  const who  = document.getElementById('extra-who').value.trim();
+  const val  = parseFloat(document.getElementById('extra-val').value) || 0;
+  const date = document.getElementById('extra-date').value;
+  if (!who || !date || val <= 0) { showToast('Preencha todos os campos do extra.'); return; }
+  state.extras.push({ id: genId(), who, val, date });
+  document.getElementById('extra-who').value  = '';
+  document.getElementById('extra-val').value  = '';
+  document.getElementById('extra-date').value = '';
+  saveState(); renderExtrasTable(); showToast('Extra registrado!'); lucide.createIcons();
+}
+
+function deleteExtra(id) {
+  state.extras = state.extras.filter(e => e.id !== id);
+  saveState(); renderExtrasTable();
+}
+
+function renderExtrasTable() {
+  const tbody = document.getElementById('extras-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const sorted = [...state.extras].sort((a,b) => new Date(b.date) - new Date(a.date));
+  sorted.forEach(e => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(e.date)}</td><td><strong>${e.who}</strong></td><td class="value-positive">${fmt(e.val)}</td>
+      <td><button onclick="deleteExtra(${e.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ============================================================
+// CAP 5: DÍVIDAS
+// ============================================================
+function getDebtBalances() {
+  const bal = { ...state.debtInitial };
+  state.debtPayments.forEach(p => {
+    if (bal[p.who] !== undefined) {
+      bal[p.who] = Math.max(0, bal[p.who] - p.val);
     }
-
-    // Keep track of completion dates
-    if (m.solangePay > 0 && m.monthStr === "Jan/2027") solangeDone = m.monthStr; // last one
-    
-    runningMila -= m.milaPay;
-    if (runningMila <= 0 && !milaDone && m.milaPay > 0) milaDone = m.monthStr;
-
-    runningVitinho -= m.vitinhoPay;
-    if (runningVitinho <= 0 && !vitinhoDone && m.vitinhoPay > 0) vitinhoDone = m.monthStr;
-
-    runningPapis -= m.papisPay;
-    if (runningPapis <= 0 && !papisDone && m.papisPay > 0) papisDone = m.monthStr;
-
-    runningChica -= m.chicaPay;
-    if (runningChica <= 0 && !chicaDone && m.chicaPay > 0) chicaDone = m.monthStr;
   });
-
-  // Calculate final date when all debts are cleared
-  let datesArray = [
-    { name: "Titia Solange", date: "Jan/2027" },
-    { name: "Mila", date: milaDone || "Quitada" },
-    { name: "Vitinho", date: vitinhoDone || "Quitada" },
-    { name: "Papis", date: papisDone || "Quitada" },
-    { name: "Madrinha Chica", date: chicaDone || "Quitada" }
-  ];
-
-  let summaryHtml = `<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem;">`;
-  datesArray.forEach(item => {
-    summaryHtml += `
-      <div style="background: var(--color-bg); padding: 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); text-align: center;">
-        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">${item.name}</span>
-        <strong style="color: var(--color-primary); font-size: 0.95rem;">${item.date}</strong>
-      </div>
-    `;
-  });
-  summaryHtml += `</div>`;
-  div.innerHTML = summaryHtml;
+  return bal;
 }
 
-// Emergency fund calculations
-function updateReserveCalculations() {
-  const sliderVal = parseFloat(document.getElementById("reserve-monthly-slider").value);
-  const annualInterest = parseFloat(document.getElementById("reserve-interest-rate").value) / 100;
-  const monthlyInterest = annualInterest / 12;
-  const target = 6000;
-  
-  let currentVal = 0;
-  let months = 0;
-  while(currentVal < target && months < 120) {
-    currentVal = (currentVal + sliderVal) * (1 + monthlyInterest);
-    months++;
-  }
-  
-  document.getElementById("reserve-months-required").textContent = `${months} meses`;
-  
-  // Estimate target date based on current month (July 2026)
-  const baseDate = new Date(2026, 6, 1); // July 2026
-  baseDate.setMonth(baseDate.getMonth() + months);
-  const targetDateStr = baseDate.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
-  document.getElementById("reserve-target-date").textContent = targetDateStr;
+function addDebtPayment() {
+  const who  = document.getElementById('debt-pay-who').value;
+  const val  = parseFloat(document.getElementById('debt-pay-val').value) || 0;
+  const date = document.getElementById('debt-pay-date').value;
+  if (!who || !date || val <= 0) { showToast('Preencha todos os campos do pagamento.'); return; }
+
+  state.debtPayments.push({ id: genId(), who, val, date });
+  document.getElementById('debt-pay-val').value  = '';
+  document.getElementById('debt-pay-date').value = '';
+  saveState(); renderDebtBalances(); renderDebtHistory(); updateCapaKPIs();
+  showToast(`Pagamento de ${fmt(val)} para ${who} registrado!`);
+  lucide.createIcons();
 }
 
-// Render the 6 destinations cards
-function renderDestinations() {
-  const grid = document.getElementById("destinations-grid");
-  grid.innerHTML = "";
-  
-  Object.values(destinations).forEach(d => {
-    const card = document.createElement("div");
-    card.className = "luxury-card";
-    card.innerHTML = `
-      <div class="card-title">
-        <span>${d.flag} ${d.name}</span>
-        <span class="badge-country">${d.language}</span>
+function deleteDebtPayment(id) {
+  state.debtPayments = state.debtPayments.filter(p => p.id !== id);
+  saveState(); renderDebtBalances(); renderDebtHistory(); updateCapaKPIs();
+}
+
+function renderDebtBalances() {
+  const list = document.getElementById('debt-balances-list');
+  if (!list) return;
+  const bal = getDebtBalances();
+  const names = { Solange:'Titia Solange', Mila:'Mila', Vitinho:'Vitinho', Papis:'Papis', Chica:'Madrinha Chica' };
+  list.innerHTML = Object.entries(bal).map(([k,v]) => {
+    const initial = state.debtInitial[k] || 0;
+    const pct = initial > 0 ? Math.round((1 - v/initial)*100) : 100;
+    const color = v <= 0 ? '#1b8a5a' : '#c0392b';
+    return `<li style="margin-bottom:0.8rem;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+        <strong>${names[k]}</strong>
+        <span style="color:${color};font-weight:700;">${v <= 0 ? '✅ Quitada!' : fmt(v)}</span>
       </div>
-      <div class="kpi-value" style="font-size: 1.6rem; color: var(--color-primary-light);">${formatCurrency(d.cost)}</div>
-      <p class="kpi-label">Custo Médio Total</p>
-      <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--color-text-main);">
-        <p><strong>Duração:</strong> ${d.duration}</p>
-        <p><strong>Visto:</strong> ${d.ease}</p>
-        <p style="margin-top: 0.5rem; color: var(--color-text-muted); font-style: italic;">${d.desc}</p>
+      <div style="background:var(--color-border);border-radius:20px;height:6px;">
+        <div style="background:${v<=0?'#1b8a5a':'var(--color-accent)'};border-radius:20px;height:6px;width:${pct}%;transition:width 0.5s;"></div>
       </div>
-    `;
-    grid.appendChild(card);
+      <small style="color:var(--color-text-muted);">${pct}% pago</small>
+    </li>`;
+  }).join('');
+}
+
+function renderDebtHistory() {
+  const tbody = document.getElementById('debt-history-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const sorted = [...state.debtPayments].sort((a,b) => new Date(b.date) - new Date(a.date));
+  sorted.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(p.date)}</td><td><strong>${p.who}</strong></td><td class="value-positive">${fmt(p.val)}</td>
+      <td><button onclick="deleteDebtPayment(${p.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
+    tbody.appendChild(tr);
   });
 }
 
-// Update exchange simulator inputs
-function updateExchangeSimulation() {
-  const selectedCountry = document.getElementById("intercambio-country-select").value;
-  const monthlySavings = parseFloat(document.getElementById("intercambio-monthly-savings").value) || 0;
-  
-  let targetCost = 60000;
-  switch (selectedCountry) {
-    case "Malta": targetCost = destinations.Malta.cost; break;
-    case "Ireland": targetCost = destinations.Ireland.cost; break;
-    case "CapeVerde": targetCost = destinations.CapeVerde.cost; break;
-    case "SouthAfrica": targetCost = destinations.SouthAfrica.cost; break;
-    case "Italy": targetCost = destinations.Italy.cost; break;
-    case "France": targetCost = destinations.France.cost; break;
-  }
-  
-  document.getElementById("sim-target-value").textContent = formatCurrency(targetCost);
-  
-  if (monthlySavings <= 0) {
-    document.getElementById("sim-months-needed").textContent = "Aporte inválido";
-    document.getElementById("sim-trip-date").textContent = "-";
-    return;
-  }
-  
-  // Assume a 6% annual return (conservative IPCA+ target)
-  const annualReturn = 0.06;
-  const monthlyReturn = annualReturn / 12;
-  
-  let balance = 0;
-  let months = 0;
-  while (balance < targetCost && months < 240) {
-    balance = (balance + monthlySavings) * (1 + monthlyReturn);
-    months++;
-  }
-  
-  document.getElementById("sim-months-needed").textContent = `${months} meses`;
-  
-  // Calculate date
-  const tripDate = new Date(2026, 6, 1); // Jul 28
-  tripDate.setMonth(tripDate.getMonth() + months);
-  document.getElementById("sim-trip-date").textContent = tripDate.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+// ============================================================
+// CAP 6: RESERVA EMERGENCIAL
+// ============================================================
+function updateReserveCalc() {
+  const slider = document.getElementById('reserve-monthly-slider');
+  if (!slider) return;
+  const monthly = parseFloat(slider.value) || 150;
+  const target  = 6000;
+  const rate    = 0.105 / 12; // 10.5% a.a.
+  let bal = 0, months = 0;
+  while (bal < target && months < 120) { bal = (bal + monthly) * (1 + rate); months++; }
+  const el = document.getElementById('reserve-months-required');
+  if (el) el.textContent = `${months} meses`;
+
+  const base = new Date(2026, 6, 1);
+  base.setMonth(base.getMonth() + months);
+  const tgt = document.getElementById('reserve-target-date');
+  if (tgt) tgt.textContent = base.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
+
+  // Update reserve current (sum of deposits in investment tagged as Reserva)
+  const reserveInvested = state.investments
+    .filter(i => i.location.toLowerCase().includes('reserva') || i.location.toLowerCase().includes('selic') || i.location.toLowerCase().includes('cdb'))
+    .reduce((s,i) => {
+      if (i.type === 'aporte' || i.type === 'rendimento') return s + i.val;
+      if (i.type === 'saque') return s - i.val;
+      return s;
+    }, 0);
+  const reserveVal = Math.max(0, Math.min(target, reserveInvested));
+  const setEl = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = fmt(v); };
+  setEl('reserve-current-value', reserveVal);
+  setEl('reserve-progress-value', reserveVal);
 }
 
-// Natura chapter list render
-function renderNaturaOrders() {
-  const tbody = document.getElementById("natura-orders-tbody");
-  tbody.innerHTML = "";
+// ============================================================
+// CAP 7: INVESTIMENTOS
+// ============================================================
+function addInvestment() {
+  const type     = document.getElementById('inv-type').value;
+  const location = document.getElementById('inv-location').value.trim();
+  const val      = parseFloat(document.getElementById('inv-val').value) || 0;
+  const date     = document.getElementById('inv-date').value;
+  if (!location || !date || val <= 0) { showToast('Preencha todos os campos do investimento.'); return; }
 
-  let totalSales = 0;
-  state.naturaOrders.forEach(o => {
-    totalSales += o.price;
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td><strong>${o.client}</strong></td>
-      <td>${o.product}</td>
-      <td>${formatCurrency(o.price)}</td>
-      <td>${o.date}</td>
-      <td><span class="badge-country">${o.status}</span></td>
-      <td>
-        <button onclick="deleteNaturaOrder(${o.id})" class="btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem; color: #c0392b; border-color: #c0392b;">Excluir</button>
-      </td>
-    `;
+  state.investments.push({ id: genId(), type, location, val, date });
+  document.getElementById('inv-location').value = '';
+  document.getElementById('inv-val').value      = '';
+  document.getElementById('inv-date').value     = '';
+  saveState(); renderInvestments(); renderInvestmentCharts(); updateCapaKPIs();
+  showToast(`Investimento (${type}) registrado!`); lucide.createIcons();
+}
+
+function deleteInvestment(id) {
+  state.investments = state.investments.filter(i => i.id !== id);
+  saveState(); renderInvestments(); renderInvestmentCharts(); updateCapaKPIs();
+}
+
+function renderInvestments() {
+  const tbody = document.getElementById('inv-history-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const sorted = [...state.investments].sort((a,b) => new Date(b.date) - new Date(a.date));
+  sorted.forEach(i => {
+    const badgeClass = `badge-${i.type}`;
+    const typeLabel  = i.type === 'aporte' ? '📥 Aporte' : i.type === 'rendimento' ? '📈 Rendimento' : '📤 Saque';
+    const isOut = i.type === 'saque';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(i.date)}</td><td><span class="badge-country ${badgeClass}">${typeLabel}</span></td><td>${i.location}</td>
+      <td class="${isOut ? 'value-negative' : 'value-positive'}">${isOut ? '-' : '+'}${fmt(i.val)}</td>
+      <td><button onclick="deleteInvestment(${i.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
     tbody.appendChild(tr);
   });
 
-  document.getElementById("natura-sales-total").textContent = formatCurrency(totalSales);
-  
-  // Natura 30% standard commission profit
-  const commission = totalSales * 0.30;
-  document.getElementById("natura-profit-total").textContent = formatCurrency(commission);
-  document.getElementById("natura-orders-count").textContent = state.naturaOrders.length;
+  // Summary KPIs
+  const totalAportes    = state.investments.filter(i=>i.type==='aporte').reduce((s,i)=>s+i.val,0);
+  const totalRendimentos= state.investments.filter(i=>i.type==='rendimento').reduce((s,i)=>s+i.val,0);
+  const totalSaques     = state.investments.filter(i=>i.type==='saque').reduce((s,i)=>s+i.val,0);
+  const saldo           = totalAportes + totalRendimentos - totalSaques;
+
+  const setEl = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = fmt(v); };
+  setEl('inv-total-aportes',    totalAportes);
+  setEl('inv-total-rendimentos',totalRendimentos);
+  setEl('inv-total-saques',     totalSaques);
+  setEl('inv-saldo-atual',      saldo);
 }
 
-// Modal open/close actions
-function openNaturaOrderModal() {
-  document.getElementById("natura-modal").classList.add("active");
-}
-function closeNaturaOrderModal() {
-  document.getElementById("natura-modal").classList.remove("active");
-}
+function renderInvestmentCharts() {
+  // Helper destroy
+  const destroy = (c) => { if(c) { try { c.destroy(); } catch(e){} } };
 
-function saveNaturaOrder() {
-  const client = document.getElementById("natura-input-client").value.trim();
-  const product = document.getElementById("natura-input-product").value.trim();
-  const price = parseFloat(document.getElementById("natura-input-price").value) || 0;
-  const date = document.getElementById("natura-input-date").value;
-  
-  if (client && product && price > 0 && date) {
-    state.naturaOrders.push({
-      id: Date.now(),
-      client,
-      product,
-      price,
-      date,
-      status: "Pendente"
+  // ---- 1. PIE: Rendimentos por local ----
+  const pieCtx = document.getElementById('invChartPie');
+  if (pieCtx) {
+    destroy(invChartPie);
+    const rendMap = {};
+    state.investments.filter(i=>i.type==='rendimento').forEach(i=>{
+      rendMap[i.location] = (rendMap[i.location]||0) + i.val;
     });
-    
-    // clear inputs
-    document.getElementById("natura-input-client").value = "";
-    document.getElementById("natura-input-product").value = "";
-    document.getElementById("natura-input-price").value = "";
-    document.getElementById("natura-input-date").value = "";
-    
-    closeNaturaOrderModal();
-    saveToLocalStorage();
-    calculateAndRender();
+    const labels = Object.keys(rendMap).length ? Object.keys(rendMap) : ['Sem dados'];
+    const data   = Object.keys(rendMap).length ? Object.values(rendMap) : [1];
+    invChartPie = new Chart(pieCtx, {
+      type:'doughnut',
+      data:{ labels, datasets:[{data, backgroundColor:['#0f4c3a','#c29d66','#186851','#eaf3f0','#2ecc71','#e67e22'], borderWidth:0 }]},
+      options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ position:'bottom', labels:{font:{size:11}} } } }
+    });
   }
+
+  // ---- 2. BAR: Aportes por local ----
+  const barCtx = document.getElementById('invChartBar');
+  if (barCtx) {
+    destroy(invChartBar);
+    const aportMap = {};
+    state.investments.filter(i=>i.type==='aporte').forEach(i=>{
+      aportMap[i.location] = (aportMap[i.location]||0) + i.val;
+    });
+    const labels = Object.keys(aportMap).length ? Object.keys(aportMap) : ['Sem dados'];
+    const data   = Object.keys(aportMap).length ? Object.values(aportMap) : [0];
+    invChartBar = new Chart(barCtx, {
+      type:'bar',
+      data:{ labels, datasets:[{ label:'Aportado (R$)', data, backgroundColor:'rgba(15,76,58,0.75)', borderRadius:6 }]},
+      options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true, ticks:{callback:v=>`R$ ${v.toLocaleString('pt-BR')}`}} } }
+    });
+  }
+
+  // ---- 3. LINE: Aportes mensais ----
+  const lineCtx = document.getElementById('invChartLine');
+  if (lineCtx) {
+    destroy(invChartLine);
+    const monthMap = {};
+    state.investments.filter(i=>i.type==='aporte').forEach(i=>{
+      const m = i.date ? i.date.substring(0,7) : 'N/A';
+      monthMap[m] = (monthMap[m]||0) + i.val;
+    });
+    const sorted = Object.entries(monthMap).sort((a,b) => a[0]<b[0]?-1:1);
+    const labels = sorted.map(([k]) => { const [y,m]=k.split('-'); return `${m}/${y}`; });
+    const data   = sorted.map(([,v]) => v);
+    invChartLine = new Chart(lineCtx, {
+      type:'line',
+      data:{ labels: labels.length ? labels : ['—'], datasets:[{ label:'Aportes (R$)', data: data.length ? data : [0], borderColor:'#c29d66', backgroundColor:'rgba(194,157,102,0.12)', tension:0.4, fill:true, pointBackgroundColor:'#c29d66', pointRadius:5 }]},
+      options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}}, scales:{ y:{beginAtZero:true} } }
+    });
+  }
+
+  // ---- 4. HIST (Bar): Aportes vs Rendimentos vs Saques por mês ----
+  const histCtx = document.getElementById('invChartHist');
+  if (histCtx) {
+    destroy(invChartHist);
+    const monthKeys = new Set();
+    state.investments.forEach(i => { if(i.date) monthKeys.add(i.date.substring(0,7)); });
+    const allMonths = [...monthKeys].sort();
+    const labels  = allMonths.map(m => { const [y,mm]=m.split('-'); return `${mm}/${y}`; });
+    const aportes = allMonths.map(m => state.investments.filter(i=>i.type==='aporte' && i.date&&i.date.startsWith(m)).reduce((s,i)=>s+i.val,0));
+    const rendimentos = allMonths.map(m => state.investments.filter(i=>i.type==='rendimento' && i.date&&i.date.startsWith(m)).reduce((s,i)=>s+i.val,0));
+    const saques  = allMonths.map(m => state.investments.filter(i=>i.type==='saque' && i.date&&i.date.startsWith(m)).reduce((s,i)=>s+i.val,0));
+    invChartHist = new Chart(histCtx, {
+      type:'bar',
+      data:{ labels: labels.length ? labels : ['Sem dados'],
+        datasets:[
+          { label:'Aportes', data:aportes.length?aportes:[0], backgroundColor:'rgba(15,76,58,0.75)', borderRadius:4 },
+          { label:'Rendimentos', data:rendimentos.length?rendimentos:[0], backgroundColor:'rgba(194,157,102,0.75)', borderRadius:4 },
+          { label:'Saques', data:saques.length?saques:[0], backgroundColor:'rgba(192,57,43,0.65)', borderRadius:4 }
+        ]},
+      options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{position:'bottom'}}, scales:{ x:{stacked:false}, y:{beginAtZero:true} } }
+    });
+  }
+}
+
+// ============================================================
+// CAP 8: INTERCÂMBIO
+// ============================================================
+function calcExchange() {
+  state.exchangePlan.destName  = document.getElementById('exchange-dest-name').value.trim();
+  state.exchangePlan.duration  = parseInt(document.getElementById('exchange-duration').value) || 12;
+  state.exchangePlan.rate      = parseFloat(document.getElementById('exchange-rate').value) || 6.50;
+  state.exchangePlan.currency  = document.getElementById('exchange-currency').value.trim() || 'EUR';
+
+  const dur = state.exchangePlan.duration;
+  const rate = state.exchangePlan.rate;
+  const cur  = state.exchangePlan.currency;
+
+  // Fixed costs
+  const fixed = ['exc-school','exc-flight','exc-visa','exc-insurance','exc-initial','exc-material'].reduce((s,id) => {
+    return s + (parseFloat(document.getElementById(id).value)||0);
+  }, 0);
+
+  // Monthly costs × duration
+  const monthly = ['exc-health','exc-food','exc-transport','exc-leisure'].reduce((s,id) => {
+    return s + (parseFloat(document.getElementById(id).value)||0);
+  }, 0);
+  const monthlyTotal = monthly * dur;
+
+  const total = fixed + monthlyTotal;
+  const totalForeign = rate > 0 ? (total / rate).toFixed(2) : 0;
+
+  state.exchangeCosts = { fixed, monthlyTotal, total };
+  saveState();
+  updateExchangeDisplay();
+  showToast('Custo calculado com sucesso!');
+}
+
+function updateExchangeDisplay() {
+  const total = state.exchangeCosts.total || 0;
+  const fixed = state.exchangeCosts.fixed || 0;
+  const monthlyTotal = state.exchangeCosts.monthlyTotal || 0;
+  const rate  = state.exchangePlan.rate || 6.50;
+  const cur   = state.exchangePlan.currency || 'EUR';
+  const totalForeign = rate > 0 ? (total/rate).toFixed(2) : 0;
+
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = v; };
+  set('exchange-total-cost', fmt(total));
+  set('exchange-foreign-desc', `Em moeda local: ${cur} ${parseFloat(totalForeign).toLocaleString('pt-BR', {minimumFractionDigits:2})}`);
+  set('exc-fixed-total', fmt(fixed));
+  set('exc-monthly-total', fmt(monthlyTotal));
+
+  // Caixinha progress
+  const acc = state.exchangeInvestments.reduce((s,i) => {
+    if (i.type==='aporte' || i.type==='rendimento') return s + i.val;
+    if (i.type==='saque') return s - i.val;
+    return s;
+  }, 0);
+  set('exc-acc-total', fmt(acc));
+  const pct = total > 0 ? Math.min(100, Math.round((acc/total)*100)) : 0;
+  const bar = document.getElementById('exc-progress-bar');
+  if (bar) bar.style.width = `${pct}%`;
+  set('exc-progress-pct', `${pct}% da meta`);
+}
+
+function addExchangeInv() {
+  const type = document.getElementById('exc-inv-type').value;
+  const val  = parseFloat(document.getElementById('exc-inv-val').value) || 0;
+  const date = document.getElementById('exc-inv-date').value;
+  if (!date || val <= 0) { showToast('Informe valor e data.'); return; }
+  state.exchangeInvestments.push({ id: genId(), type, val, date });
+  document.getElementById('exc-inv-val').value  = '';
+  document.getElementById('exc-inv-date').value = '';
+  saveState(); updateExchangeDisplay(); renderExchangeHistory();
+  showToast('Adicionado à caixinha!'); lucide.createIcons();
+}
+
+function deleteExchangeInv(id) {
+  state.exchangeInvestments = state.exchangeInvestments.filter(i => i.id !== id);
+  saveState(); updateExchangeDisplay(); renderExchangeHistory();
+}
+
+function renderExchangeHistory() {
+  const tbody = document.getElementById('exc-history-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const sorted = [...state.exchangeInvestments].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  sorted.forEach(i => {
+    const typeLabel  = i.type==='aporte'?'📥 Aporte':i.type==='rendimento'?'📈 Rendimento':'📤 Saque';
+    const isOut = i.type === 'saque';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(i.date)}</td><td>${typeLabel}</td>
+      <td class="${isOut?'value-negative':'value-positive'}">${isOut?'-':'+'}${fmt(i.val)}</td>
+      <td><button onclick="deleteExchangeInv(${i.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ============================================================
+// CAP 10: NATURA
+// ============================================================
+function addNaturaOrder() {
+  const client  = document.getElementById('nat-client').value.trim();
+  const product = document.getElementById('nat-product').value.trim();
+  const cost    = parseFloat(document.getElementById('nat-cost').value) || 0;
+  const price   = parseFloat(document.getElementById('nat-price').value) || 0;
+  const date    = document.getElementById('nat-date').value;
+  if (!client || !product || !date || price <= 0) { showToast('Preencha todos os campos da venda.'); return; }
+  state.naturaOrders.push({ id: genId(), client, product, cost, price, date });
+  ['nat-client','nat-product','nat-cost','nat-price','nat-date'].forEach(id => document.getElementById(id).value = '');
+  saveState(); renderNaturaTable(); showToast('Venda registrada!'); lucide.createIcons();
 }
 
 function deleteNaturaOrder(id) {
   state.naturaOrders = state.naturaOrders.filter(o => o.id !== id);
-  saveToLocalStorage();
-  calculateAndRender();
+  saveState(); renderNaturaTable();
 }
 
-// Victor Goals
-function renderVictorGoals() {
-  const list = document.getElementById("victor-goals-list");
-  list.innerHTML = "";
-  
-  state.victorGoals.forEach(g => {
-    const li = document.createElement("li");
-    li.style.display = "flex";
-    li.style.justifyContent = "space-between";
-    li.style.alignItems = "center";
-    li.style.padding = "0.6rem 0";
-    li.style.borderBottom = "1px solid var(--color-border)";
-    
-    const checkStyle = g.completed ? "text-decoration: line-through; color: var(--color-text-muted);" : "";
-    
-    li.innerHTML = `
-      <span style="${checkStyle}">${g.text}</span>
-      <div>
-        <button onclick="toggleVictorGoal(${g.id})" class="btn-outline" style="padding: 0.15rem 0.4rem; font-size: 0.75rem;">
-          ${g.completed ? "Reabrir" : "Concluir"}
-        </button>
-        <button onclick="deleteVictorGoal(${g.id})" class="btn-outline" style="padding: 0.15rem 0.4rem; font-size: 0.75rem; color: #c0392b; border-color: #c0392b;">
-          Excluir
-        </button>
-      </div>
-    `;
-    list.appendChild(li);
+function renderNaturaTable() {
+  const tbody = document.getElementById('natura-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  let totalSales = 0, totalCost = 0, totalProfit = 0;
+  const sorted = [...state.naturaOrders].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  sorted.forEach(o => {
+    const profit = o.price - o.cost;
+    totalSales += o.price; totalCost += o.cost; totalProfit += profit;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(o.date)}</td><td><strong>${o.client}</strong></td><td>${o.product}</td>
+      <td class="value-negative">${fmt(o.cost)}</td><td class="value-positive">${fmt(o.price)}</td>
+      <td class="${profit>=0?'value-positive':'value-negative'}" style="font-weight:700;">${fmt(profit)}</td>
+      <td><button onclick="deleteNaturaOrder(${o.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
+    tbody.appendChild(tr);
+  });
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = fmt(v); };
+  set('natura-sales-total', totalSales);
+  set('natura-cost-total',  totalCost);
+  set('natura-total-profit', totalProfit);
+}
+
+// ============================================================
+// CAP 13: FLUXO DE COMPRAS
+// ============================================================
+function addPurchase() {
+  const date        = document.getElementById('pur-date').value;
+  const supplier    = document.getElementById('pur-supplier').value.trim();
+  const subsupplier = document.getElementById('pur-subsupplier').value.trim();
+  const product     = document.getElementById('pur-product').value.trim();
+  const qty         = parseInt(document.getElementById('pur-qty').value) || 1;
+  const price       = parseFloat(document.getElementById('pur-price').value) || 0;
+  if (!date || !supplier || !product || price <= 0) { showToast('Preencha os campos obrigatórios da compra.'); return; }
+  state.purchases.push({ id: genId(), date, supplier, subsupplier, product, qty, price });
+  ['pur-date','pur-supplier','pur-subsupplier','pur-product','pur-price'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pur-qty').value = 1;
+  saveState(); renderPurchasesTable(); showToast('Compra registrada!'); lucide.createIcons();
+}
+
+function deletePurchase(id) {
+  state.purchases = state.purchases.filter(p => p.id !== id);
+  saveState(); renderPurchasesTable();
+}
+
+function renderPurchasesTable() {
+  const tbody = document.getElementById('purchase-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  let total = 0;
+  const sorted = [...state.purchases].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  sorted.forEach(p => {
+    total += p.price;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(p.date)}</td><td><strong>${p.supplier}</strong></td><td>${p.subsupplier||'—'}</td>
+      <td>${p.product}</td><td>${p.qty}</td><td class="value-negative">${fmt(p.price)}</td>
+      <td><button onclick="deletePurchase(${p.id})" class="btn-outline" style="padding:0.15rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;">Excluir</button></td>`;
+    tbody.appendChild(tr);
+  });
+  const el = document.getElementById('purchase-total');
+  if (el) el.textContent = fmt(total);
+}
+
+// ============================================================
+// CAP 11: ESPAÇO VICTOR
+// ============================================================
+function addVictorExpense() {
+  const desc   = document.getElementById('vic-desc').value.trim();
+  const cat    = document.getElementById('vic-cat').value;
+  const val    = parseFloat(document.getElementById('vic-val').value) || 0;
+  const method = document.getElementById('vic-method').value;
+  const date   = document.getElementById('vic-date').value;
+  if (!desc || !date || val <= 0) { showToast('Preencha todos os campos da despesa.'); return; }
+  state.victorExpenses.push({ id: genId(), desc, cat, val, method, date });
+  ['vic-desc','vic-val','vic-date'].forEach(id => document.getElementById(id).value = '');
+  saveState(); renderVictorHistory(); renderVictorChart(); showToast('Despesa adicionada!'); lucide.createIcons();
+}
+
+function addVictorCofrinho() {
+  const type = document.getElementById('vic-cof-type').value;
+  const loc  = document.getElementById('vic-cof-loc').value.trim();
+  const val  = parseFloat(document.getElementById('vic-cof-val').value) || 0;
+  const date = document.getElementById('vic-cof-date').value;
+  if (!date || val <= 0) { showToast('Informe valor e data.'); return; }
+  state.victorCofrinho.push({ id: genId(), type, loc, val, date });
+  ['vic-cof-loc','vic-cof-val','vic-cof-date'].forEach(id => document.getElementById(id).value = '');
+  saveState(); renderVictorHistory(); renderVictorCofrinhoTotal(); showToast('Cofrinho atualizado!'); lucide.createIcons();
+}
+
+function deleteVictorItem(id, source) {
+  if (source === 'exp') state.victorExpenses  = state.victorExpenses.filter(e => e.id !== id);
+  if (source === 'cof') state.victorCofrinho  = state.victorCofrinho.filter(c => c.id !== id);
+  saveState(); renderVictorHistory(); renderVictorChart(); renderVictorCofrinhoTotal();
+}
+
+function renderVictorCofrinhoTotal() {
+  const total = state.victorCofrinho.reduce((s,c) => {
+    if (c.type==='deposito' || c.type==='rendimento') return s + c.val;
+    if (c.type==='saque') return s - c.val;
+    return s;
+  }, 0);
+  const el = document.getElementById('vic-cof-total');
+  if (el) { el.textContent = fmt(total); el.style.color = total >= 0 ? 'var(--color-accent)' : '#c0392b'; }
+}
+
+function renderVictorHistory() {
+  const tbody = document.getElementById('vic-history-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  const expRows = state.victorExpenses.map(e => ({
+    date: e.date, tipo: '💳 Despesa Casal', desc: e.desc, cat: e.cat, method: e.method, val: e.val, isOut: true, id: e.id, src:'exp'
+  }));
+  const cofRows = state.victorCofrinho.map(c => ({
+    date: c.date,
+    tipo: c.type==='deposito'?'💰 Cofrinho':c.type==='rendimento'?'📈 Rendimento':'📤 Saque',
+    desc: c.loc || '—', cat: '—', method: '—', val: c.val, isOut: c.type==='saque', id: c.id, src:'cof'
+  }));
+
+  const all = [...expRows, ...cofRows].sort((a,b) => new Date(b.date) - new Date(a.date));
+  all.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fmtDate(r.date)}</td><td>${r.tipo}</td><td>${r.desc}</td><td>${r.cat}</td><td>${r.method}</td>
+      <td class="${r.isOut?'value-negative':'value-positive'}">${r.isOut?'-':'+'}${fmt(r.val)}</td>`;
+    tbody.appendChild(tr);
   });
 }
 
-function toggleVictorGoal(id) {
-  const goal = state.victorGoals.find(g => g.id === id);
-  if(goal) goal.completed = !goal.completed;
-  saveToLocalStorage();
-  renderVictorGoals();
+function renderVictorChart() {
+  const ctx = document.getElementById('vicExpensesChart');
+  if (!ctx) return;
+  if (vicChart) { try { vicChart.destroy(); } catch(e){} }
+
+  const catMap = {};
+  state.victorExpenses.forEach(e => { catMap[e.cat] = (catMap[e.cat]||0) + e.val; });
+  const labels = Object.keys(catMap);
+  const data   = Object.values(catMap);
+  const colors = ['#0f4c3a','#c29d66','#186851','#e67e22','#2980b9','#8e44ad','#95a5a6'];
+
+  vicChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels.length ? labels : ['Sem dados'],
+      datasets: [{ data: data.length ? data : [0], backgroundColor: colors.slice(0, labels.length || 1), borderRadius: 6 }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero:true, ticks: { callback: v => `R$ ${v}` } } }
+    }
+  });
 }
 
-function deleteVictorGoal(id) {
-  state.victorGoals = state.victorGoals.filter(g => g.id !== id);
-  saveToLocalStorage();
-  renderVictorGoals();
-}
-
-// Diary: Mood board & Gratitude
+// ============================================================
+// CAP 12: DIÁRIO
+// ============================================================
 function renderMoodboard() {
-  const grid = document.getElementById("moodboard-grid");
-  grid.innerHTML = "";
-  
+  const grid = document.getElementById('moodboard-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
   state.diary.mood.forEach(item => {
-    const el = document.createElement("div");
-    el.className = "mood-item";
+    const el = document.createElement('div');
+    el.className = 'mood-item';
     el.innerHTML = `
-      <img src="${item.url}" class="mood-img" alt="${item.title}">
+      <img src="${item.url}" class="mood-img" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=300'">
       <div class="mood-caption">${item.title}</div>
-      <button onclick="deleteMoodItem(${item.id})" style="position: absolute; top: 0.5rem; right: 0.5rem; background: rgba(0,0,0,0.5); color: #fff; border:none; border-radius: 50%; width: 22px; height: 22px; font-size: 0.8rem; cursor:pointer;">&times;</button>
+      <button onclick="deleteMoodItem(${item.id})" style="position:absolute;top:0.5rem;right:0.5rem;background:rgba(0,0,0,0.5);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:0.9rem;cursor:pointer;line-height:1;">&times;</button>
     `;
     grid.appendChild(el);
   });
 }
 
-function openMoodModal() {
-  document.getElementById("mood-modal").classList.add("active");
-}
-function closeMoodModal() {
-  document.getElementById("mood-modal").classList.remove("active");
-}
-
+function openMoodModal()    { document.getElementById('mood-modal').classList.add('active'); }
+function closeMoodModal()   { document.getElementById('mood-modal').classList.remove('active'); }
 function saveMoodItem() {
-  const title = document.getElementById("mood-input-title").value.trim();
-  let url = document.getElementById("mood-input-url").value.trim();
-  if(!url) {
-    url = "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=300&q=80"; // fallback
-  }
-  
-  if (title) {
-    state.diary.mood.push({ id: Date.now(), title, url });
-    document.getElementById("mood-input-title").value = "";
-    document.getElementById("mood-input-url").value = "";
-    closeMoodModal();
-    saveToLocalStorage();
-    renderMoodboard();
-  }
+  const title = document.getElementById('mood-input-title').value.trim();
+  let url     = document.getElementById('mood-input-url').value.trim();
+  if (!title) { showToast('Informe um título.'); return; }
+  if (!url) url = 'https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=300';
+  state.diary.mood.push({ id: genId(), title, url });
+  document.getElementById('mood-input-title').value = '';
+  document.getElementById('mood-input-url').value   = '';
+  closeMoodModal(); saveState(); renderMoodboard(); showToast('Imagem adicionada!');
 }
-
 function deleteMoodItem(id) {
   state.diary.mood = state.diary.mood.filter(m => m.id !== id);
-  saveToLocalStorage();
-  renderMoodboard();
+  saveState(); renderMoodboard();
 }
 
 function renderGratitude() {
-  const list = document.getElementById("gratitude-list");
-  list.innerHTML = "";
-  
+  const list = document.getElementById('gratitude-list');
+  if (!list) return;
+  list.innerHTML = '';
   state.diary.gratitude.forEach(item => {
-    const el = document.createElement("div");
-    el.className = "journal-entry";
+    const el = document.createElement('div');
+    el.className = 'journal-entry';
     el.innerHTML = `
       <div class="journal-date">${item.date}</div>
       <div class="journal-text">${item.text}</div>
-      <button onclick="deleteGratitudeItem(${item.id})" class="btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem; color: #c0392b; border-color: #c0392b; margin-top: 0.5rem;">Excluir</button>
+      <button onclick="deleteGratitudeItem(${item.id})" class="btn-outline" style="padding:0.2rem 0.5rem;font-size:0.75rem;color:#c0392b;border-color:#c0392b;margin-top:0.5rem;">Excluir</button>
     `;
     list.appendChild(el);
   });
 }
 
-function openGratitudeModal() {
-  document.getElementById("gratitude-modal").classList.add("active");
-}
-function closeGratitudeModal() {
-  document.getElementById("gratitude-modal").classList.remove("active");
-}
-
+function openGratitudeModal()  { document.getElementById('gratitude-modal').classList.add('active'); }
+function closeGratitudeModal() { document.getElementById('gratitude-modal').classList.remove('active'); }
 function saveGratitudeItem() {
-  const date = document.getElementById("gratitude-input-date").value.trim();
-  const text = document.getElementById("gratitude-input-text").value.trim();
-  
-  if(date && text) {
-    state.diary.gratitude.push({ id: Date.now(), date, text });
-    document.getElementById("gratitude-input-date").value = "";
-    document.getElementById("gratitude-input-text").value = "";
-    closeGratitudeModal();
-    saveToLocalStorage();
-    renderGratitude();
-  }
+  const date = document.getElementById('gratitude-input-date').value.trim();
+  const text = document.getElementById('gratitude-input-text').value.trim();
+  if (!date || !text) { showToast('Preencha data e texto.'); return; }
+  state.diary.gratitude.push({ id: genId(), date, text });
+  document.getElementById('gratitude-input-date').value = '';
+  document.getElementById('gratitude-input-text').value = '';
+  closeGratitudeModal(); saveState(); renderGratitude(); showToast('Lembrança salva!');
 }
-
 function deleteGratitudeItem(id) {
   state.diary.gratitude = state.diary.gratitude.filter(g => g.id !== id);
-  saveToLocalStorage();
-  renderGratitude();
+  saveState(); renderGratitude();
 }
 
-// Chart.js render engine
-function renderCharts() {
-  // Chart 1: Cashflow Projections
-  const labels = timeline.map(m => m.monthStr);
-  const data = timeline.map(m => m.accumulatedBalance);
+// ============================================================
+// CAPA — KPIs Resumo
+// ============================================================
+function updateCapaKPIs() {
+  // Saldo geral = entradas - saídas do livro caixa
+  const totalIn  = state.caixa.filter(c => c.type === 'receita').reduce((s,c) => s+c.val, 0);
+  const totalOut = state.caixa.filter(c => c.type !== 'receita').reduce((s,c) => s+c.val, 0);
+  const saldo    = totalIn - totalOut;
 
-  if (cashflowChart) {
-    cashflowChart.destroy();
+  const el = document.getElementById('general-status-value');
+  if (el) {
+    el.textContent = fmt(saldo);
+    el.className = `kpi-value ${saldo >= 0 ? 'value-positive' : 'value-negative'}`;
   }
 
-  const ctx1 = document.getElementById("cashflowChart").getContext("2d");
-  cashflowChart = new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Saldo Acumulado (R$)',
-        data: data,
-        borderColor: '#0f4c3a',
-        backgroundColor: 'rgba(15, 76, 58, 0.05)',
-        borderWidth: 2.5,
-        fill: true,
-        tension: 0.2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          grid: {
-            color: '#e5e7eb'
-          },
-          ticks: {
-            callback: function(value) {
-              return formatCurrency(value);
-            }
-          }
-        },
-        x: {
-          grid: {
-            display: false
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
-  });
+  // Dívidas restantes
+  const bal = getDebtBalances();
+  const totalDebts = Object.values(bal).reduce((s,v) => s+v, 0);
+  const dEl = document.getElementById('debts-total-value');
+  if (dEl) dEl.textContent = fmt(totalDebts);
 
-  // Chart 2: Portfolio Allocations (Chapter 7)
-  if (portfolioChart) {
-    portfolioChart.destroy();
-  }
-
-  const ctx2 = document.getElementById("portfolioChart").getContext("2d");
-  portfolioChart = new Chart(ctx2, {
-    type: 'doughnut',
-    data: {
-      labels: ['Renda Fixa', 'ETFs Globais', 'Fundos Imobiliários', 'Caixa'],
-      datasets: [{
-        data: [60, 20, 10, 10],
-        backgroundColor: ['#0f4c3a', '#c29d66', '#2d8a6b', '#eaf3f0'],
-        borderColor: ['#fff', '#fff', '#fff', '#fff'],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'right',
-          labels: {
-            font: {
-              family: 'Inter',
-              size: 11
-            },
-            color: '#2c3e35'
-          }
-        }
-      }
-    }
-  });
+  // Reserva
+  updateReserveCalc();
 }
 
-// CSV Export
-function exportCashflowCSV() {
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Mês/Ano;Receitas;Carol;13º Salário;Natura/Extra;Gastos Fixos;Gastos Esporádicos;Dívidas;Solange;Saldo Líquido;Saldo Acumulado\r\n";
-  
-  timeline.forEach(m => {
-    const row = [
-      m.monthStr,
-      m.salary.toFixed(2),
-      m.carol.toFixed(2),
-      m.thirteenth.toFixed(2),
-      m.naturaExtra.toFixed(2),
-      m.fixedExp.toFixed(2),
-      m.sporadicExp.toFixed(2),
-      m.othersPay.toFixed(2),
-      m.solangePay.toFixed(2),
-      m.netMonthly.toFixed(2),
-      m.accumulatedBalance.toFixed(2)
-    ].join(";");
-    csvContent += row + "\r\n";
-  });
-  
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "fluxo_de_caixa_julia_aragao.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-// Backup State download
-function exportBackupData() {
-  const jsonStr = JSON.stringify(state, null, 2);
-  const blob = new Blob([jsonStr], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.setAttribute("href", url);
-  link.setAttribute("download", "projeto_horizonte_backup.json");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-// Excel Export using SheetJS
-function exportExcel() {
-  const wb = XLSX.utils.book_new();
-  
-  // Sheet 1: Fluxo de Caixa
-  const fluxoData = [
-    ["PROJETO HORIZONTE — FLUXO DE CAIXA DETALHADO"],
-    ["Planejamento financeiro de Júlia Aragão de Janeiro/2026 a Dezembro/2030 (Valores em R$)"],
-    [],
-    ["Mês/Ano", "Salário Líquido", "Recebimento Carol", "13º Salário", "Natura/Extra", "Gastos Fixos", "Gastos Esporádicos", "Dívidas Pessoas", "Parcelas Solange", "Saldo Líquido Mês", "Saldo Acumulado"]
-  ];
-  
-  timeline.forEach(m => {
-    fluxoData.push([
-      m.monthStr,
-      m.salary,
-      m.carol,
-      m.thirteenth,
-      m.naturaExtra,
-      m.fixedExp,
-      m.sporadicExp,
-      m.othersPay,
-      m.solangePay,
-      m.netMonthly,
-      m.accumulatedBalance
-    ]);
-  });
-  
-  const ws1 = XLSX.utils.aoa_to_sheet(fluxoData);
-  // Auto col widths
-  const ws1Cols = [
-    {wch: 10}, {wch: 15}, {wch: 18}, {wch: 15}, {wch: 15},
-    {wch: 15}, {wch: 18}, {wch: 15}, {wch: 16}, {wch: 18}, {wch: 18}
-  ];
-  ws1['!cols'] = ws1Cols;
-  XLSX.utils.book_append_sheet(wb, ws1, "Fluxo de Caixa");
-  
-  // Sheet 2: Plano de Dívidas
-  const dividasData = [
-    ["CONTROLE E CRONOGRAMA DE AMORTIZAÇÃO DE DÍVIDAS"],
-    ["Acompanhamento de parcelas acordadas com familiares e conhecidos"],
-    [],
-    ["Credor", "Valor Inicial (R$)", "Parcela Mensal (R$)", "Data Início", "Meses Estimados", "Data Quitação"],
-    ["Titia Solange", 1743.98, 249.14, "Julho/2026", 7, "Janeiro/2027"],
-    ["Mila", state.debts.mila, state.debts.installment, "Setembro/2026", Math.ceil(state.debts.mila / state.debts.installment), "Fevereiro/2027"],
-    ["Vitinho", state.debts.vitinho, state.debts.installment, "Setembro/2026", Math.ceil(state.debts.vitinho / state.debts.installment), "Janeiro/2027"],
-    ["Papis", state.debts.papis, state.debts.installment, "Setembro/2026", Math.ceil(state.debts.papis / state.debts.installment), "Abril/2027"],
-    ["Madrinha Chica", state.debts.chica, state.debts.installment, "Setembro/2026", Math.ceil(state.debts.chica / state.debts.installment), "Março/2027"]
-  ];
-  const ws2 = XLSX.utils.aoa_to_sheet(dividasData);
-  ws2['!cols'] = [{wch: 18}, {wch: 18}, {wch: 18}, {wch: 15}, {wch: 15}, {wch: 15}];
-  XLSX.utils.book_append_sheet(wb, ws2, "Plano de Dívidas");
-  
-  // Sheet 3: Metas e Investimentos
-  const metasData = [
-    ["PLANEJAMENTO DE RESERVA E INTERCÂMBIO"],
-    [],
-    ["1. RESERVA EMERGENCIAL DE SEGURANÇA"],
-    ["Meta Total", "Prazo Desejado", "Aporte Mensal", "Onde Investir"],
-    [6000.00, "12 a 18 meses", 150.00, "Tesouro Selic ou CDB Liquidez Diária 100% CDI"],
-    [],
-    ["2. PROJETO INTERCÂMBIO (PRAZO DE 3 A 5 ANOS)"],
-    ["Destino", "Custo Médio Est. (R$)", "Duração", "Idioma Principal", "Exigência de Visto"],
-    ["Malta 🇲🇹", 60000.00, "6 meses", "Inglês", "Fácil (Turista Schengen)"],
-    ["Irlanda 🇮🇪", 75000.00, "8 meses", "Inglês", "Médio (Estudante com permissão de trabalho)"],
-    ["Cabo Verde 🇨🇻", 35000.00, "3 meses", "Português", "Muito Fácil"],
-    ["África do Sul 🇿🇦", 48000.00, "6 meses", "Inglês", "Fácil"],
-    ["Itália 🇮🇹", 72000.00, "6 meses", "Italiano", "Médio"],
-    ["França 🇫🇷", 85000.00, "6 meses", "Francês", "Médio"]
-  ];
-  const ws3 = XLSX.utils.aoa_to_sheet(metasData);
-  ws3['!cols'] = [{wch: 18}, {wch: 22}, {wch: 15}, {wch: 18}, {wch: 25}];
-  XLSX.utils.book_append_sheet(wb, ws3, "Metas e Investimentos");
-  
-  // Sheet 4: Renda Extra Natura
-  const naturaData = [
-    ["GERENCIAMENTO DE VENDAS NATURA"],
-    [],
-    ["Data", "Cliente", "Produto Vendido", "Valor da Venda (R$)", "Comissão Esperada (30%)", "Status Entrega"]
-  ];
-  state.naturaOrders.forEach(o => {
-    naturaData.push([
-      o.date,
-      o.client,
-      o.product,
-      o.price,
-      o.price * 0.30,
-      o.status
-    ]);
-  });
-  const ws4 = XLSX.utils.aoa_to_sheet(naturaData);
-  ws4['!cols'] = [{wch: 15}, {wch: 18}, {wch: 20}, {wch: 18}, {wch: 22}, {wch: 15}];
-  XLSX.utils.book_append_sheet(wb, ws4, "Renda Extra Natura");
-  
-  // Write and Save
-  XLSX.writeFile(wb, "Projeto_Horizonte.xlsx");
+// ============================================================
+// BACKUP EXPORT
+// ============================================================
+function exportBackup() {
+  const json     = JSON.stringify(state, null, 2);
+  const blob     = new Blob([json], { type: 'application/json' });
+  const url      = URL.createObjectURL(blob);
+  const a        = document.createElement('a');
+  a.href         = url;
+  a.download     = `Horizonte_Backup_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Backup exportado com sucesso!');
 }
