@@ -11,14 +11,14 @@
 </head>
 <body>
 
-  <!-- UNIVERSAL TOP HEADER (Desktop + Mobile) -->
+  <!-- UNIVERSAL TOP HEADER -->
   <header id="top-header">
     <button id="menu-toggle" aria-label="Abrir menu">
       <i data-lucide="menu"></i>
     </button>
     <div class="header-title">
       <span class="header-logo">Projeto Horizonte</span>
-      <span class="header-sub">Júlia Aragão</span>
+      <span class="header-sub">Júlia Aragão — Gestão &amp; Metas</span>
     </div>
     <button id="btn-export-backup" class="btn-header-action" title="Exportar Backup">
       <i data-lucide="download"></i>
@@ -32,7 +32,7 @@
       <div class="sidebar-header">
         <div>
           <h1>Projeto Horizonte</h1>
-          <p>Júlia Aragão — Gestão &amp; Metas</p>
+          <p>Júlia Aragão</p>
         </div>
         <button id="close-sidebar" class="close-sidebar-btn" aria-label="Fechar menu">
           <i data-lucide="x"></i>
@@ -41,24 +41,21 @@
 
       <nav class="chapters-list">
         <ul>
-          <li class="chapter-item"><button class="chapter-btn active" data-target="cap1"><i data-lucide="compass"></i> Capa</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap2"><i data-lucide="book-open"></i> Minha História</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap3"><i data-lucide="book"></i> Livro Caixa</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap4"><i data-lucide="sliders"></i> Organizando Finanças</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap5"><i data-lucide="shield-alert"></i> Eliminando Dívidas</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap6"><i data-lucide="shield-check"></i> Reserva Emergencial</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap7"><i data-lucide="trending-up"></i> Meus Investimentos</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap8"><i data-lucide="plane"></i> Projeto Intercâmbio</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap9"><i data-lucide="briefcase"></i> Nova Carreira</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap10"><i data-lucide="shopping-bag"></i> Vendas Natura</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap13"><i data-lucide="package"></i> Fluxo de Compras</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap11"><i data-lucide="heart"></i> Espaço Victor</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap12"><i data-lucide="pen-tool"></i> Diário do Futuro</button></li>
+          <li class="chapter-item"><button class="chapter-btn active" data-target="cap1"><i data-lucide="compass"></i> Cap 1. Capa &amp; Metas</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap2"><i data-lucide="book-open"></i> Cap 2. Minha História</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap3"><i data-lucide="book"></i> Cap 3. Livro Caixa</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap5"><i data-lucide="shield-alert"></i> Cap 4. Eliminando Dívidas</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap6"><i data-lucide="shield-check"></i> Cap 5. Reserva &amp; Investimentos</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap8"><i data-lucide="plane"></i> Cap 6. Projeto Intercâmbio</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap9"><i data-lucide="briefcase"></i> Cap 7. Nova Carreira</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap10"><i data-lucide="shopping-bag"></i> Cap 8. Revenda (CRM &amp; Compras)</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap11"><i data-lucide="heart"></i> Cap 9. Espaço Victor</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap12"><i data-lucide="pen-tool"></i> Cap 10. Diário do Futuro</button></li>
         </ul>
       </nav>
 
       <div class="sidebar-footer">
-        <span>v2.0 Premium</span>
+        <span>v3.0 Premium</span>
       </div>
     </aside>
 
@@ -72,46 +69,112 @@
       <section id="cap1" class="book-page active">
         <div class="page-title-section">
           <span class="page-chapter-num">Capítulo I</span>
-          <h2 class="page-title">Projeto Horizonte</h2>
-          <p class="page-subtitle">Bem-vinda ao seu mapa de transformação financeira, profissional e pessoal.</p>
+          <h2 class="page-title">Painel Geral</h2>
+          <p class="page-subtitle">Seu mapa de progresso, inspiração e planejamento integrado em tempo real.</p>
         </div>
 
+        <!-- CITAÇÕES (Carrossel Dinâmico) -->
         <div class="freud-quote-card">
           <div class="freud-quote-inner">
-            <i data-lucide="quote" class="quote-icon"></i>
-            <blockquote>
-              "Qual a sua responsabilidade na desordem da qual você se queixa?"
-            </blockquote>
-            <cite>— Sigmund Freud</cite>
+            <div class="quote-slider">
+              <!-- Slide 1: Freud -->
+              <div class="quote-slide active" id="slide-freud">
+                <i data-lucide="quote" class="quote-icon"></i>
+                <blockquote>"Qual a sua responsabilidade na desordem da qual você se queixa?"</blockquote>
+                <cite>— Sigmund Freud</cite>
+              </div>
+              <!-- Slide 2: Trabalho e Diligência -->
+              <div class="quote-slide" id="slide-diligencia">
+                <i data-lucide="gem" class="quote-icon"></i>
+                <blockquote>"As mãos preguiçosas empobrecem o homem, porém as mãos diligentes lhe trazem riqueza." <span class="verse-ref">(Provérbios 10:4)</span><br><br>
+                "O dinheiro ganho às pressas diminuirá, mas quem o ajunta aos poucos terá cada vez mais." <span class="verse-ref">(Provérbios 13:11)</span></blockquote>
+                <cite>— 1. Trabalho e Diligência</cite>
+              </div>
+              <!-- Slide 3: Administração e Controle -->
+              <div class="quote-slide" id="slide-controle">
+                <i data-lucide="scale" class="quote-icon"></i>
+                <blockquote>"O sábio economiza e tem sempre bastante comida e dinheiro em sua casa, mas o tolo gasta todo o seu dinheiro assim que o recebe." <span class="verse-ref">(Provérbios 21:20)</span><br><br>
+                "O rico domina os pobres, e quem toma emprestado é escravo de quem empresta." <span class="verse-ref">(Provérbios 22:7)</span></blockquote>
+                <cite>— 2. Administração e Controle de Gastos</cite>
+              </div>
+              <!-- Slide 4: Generosidade -->
+              <div class="quote-slide" id="slide-generosidade">
+                <i data-lucide="heart-handshake" class="quote-icon"></i>
+                <blockquote>"Quem é generoso prospera; quem dá alívio aos outros, alívio receberá." <span class="verse-ref">(Provérbios 11:24-25)</span><br><br>
+                "Cada um dê conforme determinou em seu coração, não com tristeza ou por obrigação, pois Deus ama quem dá com alegria." <span class="verse-ref">(2 Coríntios 9:7)</span></blockquote>
+                <cite>— 3. Generosidade e Compartilhamento</cite>
+              </div>
+              <!-- Slide 5: Propósito e Riqueza -->
+              <div class="quote-slide" id="slide-proposito">
+                <i data-lucide="compass" class="quote-icon"></i>
+                <blockquote>"Ninguém pode servir a dois senhores; pois odiará a um e amará o outro... Vocês não podem servir a Deus e ao Dinheiro." <span class="verse-ref">(Mateus 6:24)</span><br><br>
+                "Pois o amor ao dinheiro é a raiz de todos os males. Algumas pessoas, por cobiçarem o dinheiro, desviaram-se da fé..." <span class="verse-ref">(1 Timóteo 6:10)</span></blockquote>
+                <cite>— 4. Propósito e Riqueza</cite>
+              </div>
+            </div>
+            <!-- Controles do Carrossel -->
+            <div class="quote-controls">
+              <button onclick="prevQuote()" aria-label="Citação Anterior"><i data-lucide="chevron-left"></i></button>
+              <button onclick="nextQuote()" aria-label="Próxima Citação"><i data-lucide="chevron-right"></i></button>
+            </div>
           </div>
         </div>
 
-        <div class="card-grid">
+        <!-- 6 KPIs INTEGRADOS -->
+        <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
           <div class="luxury-card">
             <div class="card-title"><span>Saldo Acumulado</span><i data-lucide="activity"></i></div>
             <div id="general-status-value" class="kpi-value value-negative">R$ 0,00</div>
-            <p class="kpi-label">Saldo Líquido Projetado</p>
+            <p class="kpi-label">Livro Caixa Atual</p>
           </div>
           <div class="luxury-card">
             <div class="card-title"><span>Dívidas Restantes</span><i data-lucide="credit-card"></i></div>
             <div id="debts-total-value" class="kpi-value">R$ 0,00</div>
-            <p class="kpi-label">Total a Pagar a Terceiros</p>
+            <p class="kpi-label">Pagar a Terceiros</p>
           </div>
           <div class="luxury-card">
-            <div class="card-title"><span>Reserva Emergencial</span><i data-lucide="piggy-bank"></i></div>
+            <div class="card-title"><span>Reserva Emergencial</span><i data-lucide="shield"></i></div>
             <div id="reserve-progress-value" class="kpi-value">R$ 0,00</div>
             <p class="kpi-label">Meta: R$ 6.000,00</p>
           </div>
+          <div class="luxury-card">
+            <div class="card-title"><span>Intercâmbio</span><i data-lucide="plane"></i></div>
+            <div id="exchange-progress-value" class="kpi-value">0%</div>
+            <p class="kpi-label">Meta do Destino</p>
+          </div>
+          <div class="luxury-card">
+            <div class="card-title"><span>Dízimo (10%)</span><i data-lucide="leaf"></i></div>
+            <div id="tith-total-value" class="kpi-value" style="color: #1b8a5a;">R$ 0,00</div>
+            <p class="kpi-label">Sobre Receitas Totais</p>
+          </div>
+          <div class="luxury-card">
+            <div class="card-title"><span>Cofrinho Victor</span><i data-lucide="heart"></i></div>
+            <div id="vic-cof-cap1-value" class="kpi-value">R$ 0,00</div>
+            <p class="kpi-label">Metas Compartilhadas</p>
+          </div>
         </div>
 
-        <div class="luxury-card" style="margin-top:1rem;">
-          <h3 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);margin-bottom:1rem;font-size:1.3rem;">Uma Mensagem para Você</h3>
-          <p style="font-style:italic;color:var(--color-text-main);font-size:1rem;line-height:1.8;">
-            "Júlia, o cenário que você enfrenta hoje no vermelho é totalmente reversível. Você possui uma renda fixa e dívidas com pessoas próximas, o que te dá flexibilidade para negociar sem os juros abusivos dos bancos. O Projeto Horizonte é o seu diário de conquistas para os próximos 5 anos."
-          </p>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
-            <button class="btn-primary" onclick="switchTab('cap3')">Ver Livro Caixa <i data-lucide="arrow-right"></i></button>
-            <button class="btn-outline" onclick="switchTab('cap8')">Planejar Intercâmbio <i data-lucide="plane"></i></button>
+        <!-- PRÓXIMOS PASSOS (Urgência & Calendário) e Caixinhas -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+          <div class="luxury-card">
+            <div class="card-title"><span>Próximos Passos (Dívidas)</span><i data-lucide="calendar"></i></div>
+            <p style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:1rem;">Calendário de vencimento das parcelas acordadas.</p>
+            <div id="upcoming-debts-list" style="display:flex; flex-direction:column; gap:0.8rem; max-height:280px; overflow-y:auto;">
+              <!-- JS Populated upcoming debts -->
+            </div>
+          </div>
+
+          <!-- DYNAMIC CAIXINHAS (METAS PERSONALIZADAS) -->
+          <div class="luxury-card">
+            <div class="card-title">
+              <span>Metas Personalizadas (Caixinhas)</span>
+              <button class="btn-primary" onclick="openCaixinhaModal()" style="font-size:0.75rem; padding:0.4rem 0.8rem;">
+                <i data-lucide="plus"></i> Criar Caixinha
+              </button>
+            </div>
+            <div id="caixinhas-container" style="display:flex; flex-direction:column; gap:1rem; margin-top:0.5rem; max-height:280px; overflow-y:auto; padding-right:5px;">
+              <!-- JS Populated dynamic caixinhas with progress bar and % -->
+            </div>
           </div>
         </div>
       </section>
@@ -123,28 +186,28 @@
           <h2 class="page-title">Minha História &amp; Objetivos</h2>
           <p class="page-subtitle">Quem sou eu, meus talentos e o destino onde quero chegar.</p>
         </div>
-        <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;">
-          <div style="background:#fff;padding:2rem;border-radius:var(--radius-md);border:1px solid var(--color-border);">
-            <h3 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);margin-bottom:1rem;">O Meu Perfil Profissional</h3>
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:2rem;">
+          <div style="background:#fff; padding:2rem; border-radius:var(--radius-md); border:1px solid var(--color-border);">
+            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-bottom:1rem;">O Meu Perfil Profissional</h3>
             <p style="margin-bottom:1rem;">Formada em <strong>Serviço Social</strong> e com qualificações em <strong>Estética</strong> (Massagem, Depilação e Design de Sobrancelhas).</p>
-            <p style="margin-bottom:1rem;">Consultora <strong>Natura</strong> como renda extra. Objetivo: organizar a vida financeira e tomar decisões com liberdade, sem o desespero do vermelho mensal.</p>
-            <h3 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);margin-top:2rem;margin-bottom:1rem;">Metas de Longo Prazo</h3>
-            <ul style="padding-left:1.5rem;margin-bottom:1rem;">
-              <li style="margin-bottom:0.5rem;"><strong>Meta 1:</strong> Eliminar todas as dívidas com familiares e terceiros.</li>
+            <p style="margin-bottom:1rem;">Consultora de <strong>Revenda</strong> como renda extra. Objetivo: organizar a vida financeira e tomar decisões com liberdade, sem o desespero do vermelho mensal.</p>
+            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-top:2rem; margin-bottom:1rem;">Metas de Longo Prazo</h3>
+            <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+              <li style="margin-bottom:0.5rem;"><strong>Meta 1:</strong> Eliminar todas as dívidas com familiares e amigos.</li>
               <li style="margin-bottom:0.5rem;"><strong>Meta 2:</strong> Reserva Emergencial de R$ 6.000,00.</li>
               <li style="margin-bottom:0.5rem;"><strong>Meta 3:</strong> Intercâmbio no exterior (+1 ano).</li>
               <li style="margin-bottom:0.5rem;"><strong>Meta 4:</strong> Transição de carreira consciente.</li>
             </ul>
           </div>
-          <div style="display:flex;flex-direction:column;gap:1.5rem;">
-            <div style="background:var(--color-primary-soft);padding:1.5rem;border-radius:var(--radius-md);border:1px solid var(--color-accent);">
-              <h4 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);margin-bottom:0.5rem;">Identidade Visual</h4>
-              <p style="font-size:0.85rem;color:var(--color-text-main);">A paleta <strong>Luxury</strong>: Verde Esmeralda = crescimento, Dourado = valor dos seus objetivos, Branco = clareza mental.</p>
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            <div style="background:var(--color-primary-soft); padding:1.5rem; border-radius:var(--radius-md); border:1px solid var(--color-accent);">
+              <h4 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-bottom:0.5rem;">Identidade Visual</h4>
+              <p style="font-size:0.85rem; color:var(--color-text-main);">A paleta <strong>Luxury</strong>: Verde Esmeralda = crescimento, Dourado = valor dos seus objetivos, Branco = clareza mental.</p>
             </div>
-            <div style="background:#fff;padding:1.5rem;border-radius:var(--radius-md);border:1px solid var(--color-border);text-align:center;">
-              <i data-lucide="award" style="font-size:3rem;color:var(--color-accent);margin-bottom:1rem;"></i>
-              <h4 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);">Valores Pessoais</h4>
-              <p style="font-size:0.85rem;color:var(--color-text-muted);margin-top:0.5rem;">Segurança • Organização • Independência • Realização • Gratidão</p>
+            <div style="background:#fff; padding:1.5rem; border-radius:var(--radius-md); border:1px solid var(--color-border); text-align:center;">
+              <i data-lucide="award" style="font-size:3rem; color:var(--color-accent); margin-bottom:1rem;"></i>
+              <h4 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark);">Valores Pessoais</h4>
+              <p style="font-size:0.85rem; color:var(--color-text-muted); margin-top:0.5rem;">Segurança • Organização • Independência • Realização • Gratidão</p>
             </div>
           </div>
         </div>
@@ -154,186 +217,192 @@
       <section id="cap3" class="book-page">
         <div class="page-title-section">
           <span class="page-chapter-num">Capítulo III</span>
-          <h2 class="page-title">Livro Caixa</h2>
-          <p class="page-subtitle">Registre entradas e saídas em tempo real. O histórico fica salvo automaticamente.</p>
+          <h2 class="page-title">Livro Caixa Integrado</h2>
+          <p class="page-subtitle">Acompanhe e registre todas as suas receitas e despesas. Os salários e extras são registrados aqui.</p>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-bottom:2rem;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem; margin-bottom:2rem;">
+          <!-- Registrar Nova Transação -->
           <div class="luxury-card">
             <div class="card-title">Nova Transação</div>
+            
             <div class="form-group">
-              <label class="form-label">Tipo</label>
-              <select id="caixa-type" class="form-control">
-                <option value="receita">Receita (Entrada) 🟢</option>
-                <option value="despesa">Despesa (Saída) 🔴</option>
-                <option value="cartao">Cartão de Crédito 🔵</option>
+              <label class="form-label">Fluxo</label>
+              <div style="display:flex; gap:1rem; margin-top:0.2rem;">
+                <label style="display:inline-flex; align-items:center; gap:0.3rem; font-size:0.9rem; cursor:pointer;">
+                  <input type="radio" name="caixa-flow" value="receita" checked onchange="toggleCaixaTypeSelect()"> 🟢 Entrada
+                </label>
+                <label style="display:inline-flex; align-items:center; gap:0.3rem; font-size:0.9rem; cursor:pointer;">
+                  <input type="radio" name="caixa-flow" value="despesa" onchange="toggleCaixaTypeSelect()"> 🔴 Saída
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Categoria / Origem</label>
+              <select id="caixa-type-select" class="form-control" onchange="checkOtherType()">
+                <!-- Populated alphabetically in JS based on radio choice -->
               </select>
             </div>
+
+            <!-- Div específica para o campo Outros -->
+            <div class="form-group" id="caixa-other-type-wrap" style="display:none;">
+              <label class="form-label">Especificar "Outros"</label>
+              <input type="text" id="caixa-other-type-val" class="form-control" placeholder="Descreva a categoria...">
+            </div>
+
             <div class="form-group">
               <label class="form-label">Data</label>
               <input type="date" id="caixa-date" class="form-control">
             </div>
+
             <div class="form-group">
-              <label class="form-label">Descrição</label>
-              <input type="text" id="caixa-desc" class="form-control" placeholder="Ex: Fatura Nubank, Salário...">
+              <label class="form-label">Descrição / Observação</label>
+              <input type="text" id="caixa-desc" class="form-control" placeholder="Ex: Fatura paga, Extra Estética...">
             </div>
+
             <div class="form-group">
               <label class="form-label">Valor (R$)</label>
               <input type="number" id="caixa-val" class="form-control" step="0.01" min="0">
             </div>
+
             <button id="btn-add-caixa" class="btn-primary" style="width:100%;">
               <i data-lucide="plus-circle"></i> Registrar Transação
             </button>
           </div>
 
+          <!-- Resumo do Mês com Filtros -->
           <div class="luxury-card">
-            <div class="card-title">Resumo do Mês Atual</div>
-            <div style="display:flex;flex-direction:column;gap:1rem;margin-top:0.5rem;">
-              <div style="background:var(--color-primary-soft);padding:1rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;align-items:center;">
+            <div class="card-title">Resumo por Competência</div>
+            
+            <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+              <div style="flex:1;">
+                <label class="form-label" style="font-size:0.7rem;">Mês/Ano Filtro</label>
+                <input type="month" id="summary-month-filter" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.85rem;">
+              </div>
+              <button id="btn-clear-summary-filter" class="btn-outline" style="padding:0.4rem 0.8rem; margin-top:1.2rem; font-size:0.85rem;" title="Limpar Filtro">
+                <i data-lucide="refresh-cw"></i>
+              </button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <div style="background:var(--color-primary-soft); padding:1rem; border-radius:var(--radius-sm); display:flex; justify-content:space-between; align-items:center;">
                 <span>Total de Entradas</span>
-                <strong id="caixa-total-in" style="color:#1b8a5a;font-size:1.1rem;">R$ 0,00</strong>
+                <strong id="caixa-total-in" style="color:#1b8a5a; font-size:1.1rem;">R$ 0,00</strong>
               </div>
-              <div style="background:#fff0f0;padding:1rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;align-items:center;">
-                <span>Total de Saídas (+ Cartões)</span>
-                <strong id="caixa-total-out" style="color:#c0392b;font-size:1.1rem;">R$ 0,00</strong>
+              <div style="background:#fff0f0; padding:1rem; border-radius:var(--radius-sm); display:flex; justify-content:space-between; align-items:center;">
+                <span>Total de Saídas</span>
+                <strong id="caixa-total-out" style="color:#c0392b; font-size:1.1rem;">R$ 0,00</strong>
               </div>
-              <div style="background:var(--color-bg);padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--color-accent);display:flex;justify-content:space-between;align-items:center;">
+              <div style="background:var(--color-bg); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--color-accent); display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-weight:700;">Saldo Líquido</span>
                 <strong id="caixa-saldo" style="font-size:1.3rem;">R$ 0,00</strong>
               </div>
             </div>
+
+            <!-- Calculadora de 13º com os salários do ano atual -->
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--color-border); font-size: 0.85rem;">
+              <p>Média Salarial (Ano Corrente): <strong id="caixa-salary-avg" style="float:right; color:var(--color-primary);">R$ 0,00</strong></p>
+              <p style="margin-top:0.4rem;">Projeção do 13º Salário: <strong id="caixa-13th-proj" style="float:right; color:var(--color-accent);">R$ 0,00</strong></p>
+            </div>
           </div>
         </div>
 
+        <!-- Tabela do Histórico com Filtros Multi-colunas -->
         <div class="luxury-card">
           <div class="card-title">Histórico Completo de Movimentações</div>
-          <div class="table-wrapper" style="max-height:450px;overflow-y:auto;">
+          
+          <!-- Filtros de coluna -->
+          <div class="table-filters" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:0.5rem; margin-bottom:1rem;">
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Filtro Data</label>
+              <input type="text" id="filter-caixa-date" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;" placeholder="Ex: 2026-07">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Filtro Tipo</label>
+              <select id="filter-caixa-type" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;">
+                <option value="">Todos</option>
+                <option value="receita">Entrada (Receita)</option>
+                <option value="despesa">Saída (Despesa)</option>
+                <option value="cartao">Cartão</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Filtro Categoria/Desc</label>
+              <input type="text" id="filter-caixa-desc" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;" placeholder="Ex: Nubank, Salário...">
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Filtro Valor Mínimo (R$)</label>
+              <input type="number" id="filter-caixa-val" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;" placeholder="Ex: 100">
+            </div>
+          </div>
+
+          <div class="table-wrapper" style="max-height:450px; overflow-y:auto;">
             <table class="luxury-table">
               <thead>
                 <tr>
                   <th>Data</th>
-                  <th>Tipo</th>
-                  <th>Descrição</th>
+                  <th>Fluxo</th>
+                  <th>Categoria / Descrição</th>
+                  <th>Observação</th>
                   <th>Valor</th>
-                  <th>Ação</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody id="caixa-tbody">
+                <!-- JS populated -->
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- ===================== CAP 4: ORGANIZANDO FINANÇAS ===================== -->
-      <section id="cap4" class="book-page">
+      <!-- ===================== CAP 4: ELIMINANDO DÍVIDAS ===================== -->
+      <section id="cap5" class="book-page">
         <div class="page-title-section">
           <span class="page-chapter-num">Capítulo IV</span>
-          <h2 class="page-title">Organizando Minhas Finanças</h2>
-          <p class="page-subtitle">Configure seus salários, entradas extras e veja a projeção do 13º calculada automaticamente.</p>
+          <h2 class="page-title">Eliminando Minhas Dívidas</h2>
+          <p class="page-subtitle">Gerencie suas dívidas de forma manual. Edite valores iniciais, adicione credores e registre parcelas pagas.</p>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;margin-bottom:2rem;">
-          <!-- Salário e 13º -->
-          <div class="luxury-card">
-            <div class="card-title">Controle do Salário &amp; 13º Calculado</div>
-            <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:1rem;">
-              Registre seu salário a cada mês. O 13º será calculado como a <strong>média dos salários registrados no ano</strong>.
-            </p>
-            <div style="display:flex;gap:0.5rem;align-items:flex-end;margin-bottom:1rem;">
-              <div style="flex-grow:1;">
-                <label class="form-label">Mês/Ano</label>
-                <input type="month" id="salary-month" class="form-control">
-              </div>
-              <div style="flex-grow:1;">
-                <label class="form-label">Salário Líquido (R$)</label>
-                <input type="number" id="cfg-salary-add" class="form-control" step="0.01">
-              </div>
-              <button id="btn-add-salary" class="btn-primary" style="white-space:nowrap;"><i data-lucide="plus"></i></button>
-            </div>
-            <div style="background:var(--color-bg);padding:1rem;border-radius:var(--radius-sm);">
-              <p style="margin-bottom:0.5rem;">Média Salarial Registrada: <strong id="avg-salary-val" style="float:right;color:var(--color-primary);">R$ 0,00</strong></p>
-              <p>Projeção do 13º Salário: <strong id="proj-13-val" style="float:right;color:var(--color-accent);">R$ 0,00</strong></p>
-            </div>
-            <div class="table-wrapper" style="max-height:200px;overflow-y:auto;margin-top:1rem;">
-              <table class="luxury-table" style="font-size:0.82rem;">
-                <thead><tr><th>Mês/Ano</th><th>Salário</th><th>Ação</th></tr></thead>
-                <tbody id="salary-history-tbody"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Recebimento Carol -->
-          <div class="luxury-card">
-            <div class="card-title">Recebimento Fixo — Carol</div>
+        <!-- Gerenciamento de Credores e Valores Iniciais -->
+        <div style="display:grid; grid-template-columns:1fr 1.5fr; gap:2rem; margin-bottom:2rem;">
+          <div class="luxury-card" style="height:fit-content;">
+            <div class="card-title">Gerenciar Lista de Credores</div>
             <div class="form-group">
-              <label class="form-label">Valor Fixo Mensal da Carol (R$)</label>
-              <input type="number" id="cfg-carol" class="form-control" value="450.00" step="0.01">
+              <label class="form-label">Nome do Credor</label>
+              <input type="text" id="creditor-name" class="form-control" placeholder="Ex: Camila, Titia Solange...">
             </div>
             <div class="form-group">
-              <label class="form-label">Natura / Extra Mensal Médio (R$)</label>
-              <input type="number" id="cfg-natura-extra" class="form-control" value="150.00" step="0.01">
+              <label class="form-label">Valor Inicial Devido (R$)</label>
+              <input type="number" id="creditor-initial-val" class="form-control" step="0.01" placeholder="Ex: 500.00">
             </div>
-            <button id="btn-save-cfg-fixed" class="btn-outline" style="width:100%;">
-              <i data-lucide="save"></i> Salvar Receitas Fixas
+            <div class="form-group">
+              <label class="form-label">Próximo Vencimento (Dia do Mês)</label>
+              <input type="number" id="creditor-due-day" class="form-control" min="1" max="31" value="10">
+            </div>
+            <button id="btn-add-creditor" class="btn-primary" style="width:100%;">
+              <i data-lucide="plus-circle"></i> Adicionar / Editar Credor
             </button>
           </div>
 
-          <!-- Extras Manuais -->
+          <!-- Saldos Devedores Atuais com barra de progresso individual e % -->
           <div class="luxury-card">
-            <div class="card-title">Extras Recebidos <span class="badge-country">Manual</span></div>
-            <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:1rem;">Registre aqui pagamentos avulsos, freelas, presentes em dinheiro, etc.</p>
-            <div class="form-group">
-              <label class="form-label">Quem pagou / Origem?</label>
-              <input type="text" id="extra-who" class="form-control" placeholder="Ex: Cliente Maquiagem, Tia Lúcia...">
+            <div class="card-title">Saldos Devedores &amp; Progresso</div>
+            <div id="debt-balances-list" style="display:flex; flex-direction:column; gap:1.2rem; max-height:300px; overflow-y:auto; padding-right:5px;">
+              <!-- JS Populated with visual progress bar + percentage -->
             </div>
-            <div style="display:flex;gap:1rem;">
-              <div class="form-group" style="flex:1;">
-                <label class="form-label">Valor (R$)</label>
-                <input type="number" id="extra-val" class="form-control" step="0.01">
-              </div>
-              <div class="form-group" style="flex:1;">
-                <label class="form-label">Data</label>
-                <input type="date" id="extra-date" class="form-control">
-              </div>
-            </div>
-            <button id="btn-add-extra" class="btn-primary" style="width:100%;"><i data-lucide="plus-circle"></i> Adicionar Extra</button>
           </div>
         </div>
 
-        <!-- Tabela de Extras -->
-        <div class="luxury-card">
-          <div class="card-title">Histórico de Entradas Extras</div>
-          <div class="table-wrapper">
-            <table class="luxury-table">
-              <thead>
-                <tr><th>Data</th><th>Origem / Quem pagou</th><th>Valor</th><th>Ação</th></tr>
-              </thead>
-              <tbody id="extras-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== CAP 5: ELIMINANDO DÍVIDAS ===================== -->
-      <section id="cap5" class="book-page">
-        <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo V</span>
-          <h2 class="page-title">Eliminando Minhas Dívidas</h2>
-          <p class="page-subtitle">Registre cada pagamento com a data real. O saldo devedor é atualizado automaticamente.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-bottom:2rem;">
-          <div class="luxury-card">
-            <div class="card-title">Registrar Pagamento</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem; margin-bottom:2rem;">
+          <!-- Registrar Pagamento -->
+          <div class="luxury-card" style="height:fit-content;">
+            <div class="card-title">Registrar Pagamento / Abatimento</div>
             <div class="form-group">
-              <label class="form-label">Para quem você pagou?</label>
+              <label class="form-label">Selecione o Credor</label>
               <select id="debt-pay-who" class="form-control">
-                <option value="Solange">Titia Solange</option>
-                <option value="Mila">Mila</option>
-                <option value="Vitinho">Vitinho</option>
-                <option value="Papis">Papis</option>
-                <option value="Chica">Madrinha Chica</option>
+                <!-- JS populated options -->
               </select>
             </div>
             <div class="form-group">
@@ -345,82 +414,43 @@
               <input type="date" id="debt-pay-date" class="form-control">
             </div>
             <button id="btn-add-debt-pay" class="btn-primary" style="width:100%;">
-              <i data-lucide="check-circle"></i> Registrar Abatimento
+              <i data-lucide="check-circle"></i> Registrar Pagamento
             </button>
           </div>
 
-          <div class="luxury-card">
-            <div class="card-title">Saldos Devedores Atuais</div>
-            <ul id="debt-balances-list" style="list-style:none;line-height:2.4;">
-              <!-- JS Populated -->
-            </ul>
-          </div>
-        </div>
-
-        <div class="luxury-card">
-          <div class="card-title">Extrato Completo de Pagamentos</div>
-          <div class="table-wrapper">
-            <table class="luxury-table">
-              <thead>
-                <tr><th>Data</th><th>Credor</th><th>Valor Pago</th><th>Ação</th></tr>
-              </thead>
-              <tbody id="debt-history-tbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== CAP 6: RESERVA EMERGENCIAL ===================== -->
-      <section id="cap6" class="book-page">
-        <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo VI</span>
-          <h2 class="page-title">Reserva Emergencial</h2>
-          <p class="page-subtitle">Sua meta de segurança: R$ 6.000,00 em liquidez diária.</p>
-        </div>
-        <div class="card-grid">
-          <div class="luxury-card">
-            <div class="card-title">Meta</div>
-            <div class="kpi-value" style="color:var(--color-accent);">R$ 6.000,00</div>
-            <p class="kpi-label">Objetivo de Segurança Mínima</p>
-          </div>
-          <div class="luxury-card">
-            <div class="card-title">Progresso Atual</div>
-            <div id="reserve-current-value" class="kpi-value">R$ 0,00</div>
-            <p class="kpi-label">Valor total acumulado</p>
-          </div>
-          <div class="luxury-card">
-            <div class="card-title">Data Estimada de Conclusão</div>
-            <div id="reserve-target-date" class="kpi-value" style="font-size:1.6rem;padding-top:0.6rem;">A calcular...</div>
-            <p class="kpi-label">Data Estimada</p>
-          </div>
-        </div>
-        <div class="luxury-card" style="margin-top:1rem;">
-          <div class="card-title">Simulador de Aportes</div>
-          <div class="form-group">
-            <label class="form-label">Aporte Mensal Dedicado (R$)</label>
-            <input type="range" id="reserve-monthly-slider" min="50" max="600" step="25" value="150" style="width:100%;accent-color:var(--color-primary);">
-            <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-top:0.3rem;">
-              <span>R$ 50</span><strong id="reserve-slider-val">R$ 150</strong><span>R$ 600</span>
+          <!-- Histórico de Pagamentos de Dívidas -->
+          <div class="luxury-card" style="grid-column: span 2;">
+            <div class="card-title">Extrato de Pagamentos Realizados</div>
+            <div class="table-wrapper" style="max-height:280px; overflow-y:auto;">
+              <table class="luxury-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Credor</th>
+                    <th>Valor Pago</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="debt-history-tbody">
+                  <!-- JS populated -->
+                </tbody>
+              </table>
             </div>
           </div>
-          <div style="background:var(--color-bg);padding:1rem;border-radius:var(--radius-sm);font-size:0.85rem;">
-            <span>Tempo aproximado necessário:</span>
-            <strong id="reserve-months-required" style="float:right;color:var(--color-primary);">... meses</strong>
-          </div>
         </div>
       </section>
 
-      <!-- ===================== CAP 7: MEUS INVESTIMENTOS ===================== -->
-      <section id="cap7" class="book-page">
+      <!-- ===================== CAP 5: RESERVA & INVESTIMENTOS ===================== -->
+      <section id="cap6" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo VII</span>
-          <h2 class="page-title">Meus Investimentos</h2>
-          <p class="page-subtitle">Controle detalhado: aportes, rendimentos e saques. O saldo é calculado automaticamente.</p>
+          <span class="page-chapter-num">Capítulo V</span>
+          <h2 class="page-title">Reserva &amp; Investimentos</h2>
+          <p class="page-subtitle">Acompanhe sua carteira geral e o progresso da sua reserva de emergência no mesmo lugar.</p>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-bottom:2rem;">
-          <!-- Formulário de lançamento -->
-          <div class="luxury-card">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem; margin-bottom:2rem;">
+          <!-- Registrar Movimentação de Investimento -->
+          <div class="luxury-card" style="height:fit-content;">
             <div class="card-title">Registrar Movimentação</div>
             <div class="form-group">
               <label class="form-label">Tipo</label>
@@ -431,10 +461,23 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Onde? (Ativo / Local)</label>
-              <input type="text" id="inv-location" class="form-control" placeholder="Ex: Tesouro Selic, Nubank CDB...">
+              <label class="form-label">Tipo de Ativo</label>
+              <select id="inv-asset-type" class="form-control">
+                <option value="SELIC">Tesouro SELIC 🛡️</option>
+                <option value="CDB">CDB (Liquidez Diária) 🏦</option>
+                <option value="Tesouro IPCA+">Tesouro IPCA+ 📈</option>
+                <option value="LCI/LCA">LCI / LCA 🌾</option>
+                <option value="FII">FII (Fundos Imobiliários) 🏢</option>
+                <option value="ETF">ETF (Ações Globais) 🌍</option>
+                <option value="Poupança">Poupança 🕳️</option>
+                <option value="Outro">Outros 💼</option>
+              </select>
             </div>
-            <div style="display:flex;gap:1rem;">
+            <div class="form-group">
+              <label class="form-label">Ativo / Local Específico</label>
+              <input type="text" id="inv-location" class="form-control" placeholder="Ex: Inter CDB 100% CDI, IPCA 2029...">
+            </div>
+            <div style="display:flex; gap:1rem;">
               <div class="form-group" style="flex:1;">
                 <label class="form-label">Valor (R$)</label>
                 <input type="number" id="inv-val" class="form-control" step="0.01" min="0">
@@ -444,338 +487,383 @@
                 <input type="date" id="inv-date" class="form-control">
               </div>
             </div>
-            <button id="btn-add-inv" class="btn-primary" style="width:100%;"><i data-lucide="plus-circle"></i> Registrar</button>
+            <button id="btn-add-inv" class="btn-primary" style="width:100%;"><i data-lucide="plus-circle"></i> Registrar Movimentação</button>
           </div>
 
-          <!-- Resumo -->
-          <div class="luxury-card">
-            <div class="card-title">Resumo da Carteira</div>
-            <div style="display:flex;flex-direction:column;gap:1rem;margin-top:0.5rem;">
-              <div style="background:var(--color-primary-soft);padding:1rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;">
-                <span>Total Aportado</span>
-                <strong id="inv-total-aportes" style="color:var(--color-primary);">R$ 0,00</strong>
-              </div>
-              <div style="background:#fff8e6;padding:1rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;">
-                <span>Total Rendido</span>
-                <strong id="inv-total-rendimentos" style="color:var(--color-accent);">R$ 0,00</strong>
-              </div>
-              <div style="background:#fff0f0;padding:1rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;">
-                <span>Total Sacado</span>
-                <strong id="inv-total-saques" style="color:#c0392b;">R$ 0,00</strong>
-              </div>
-              <div style="background:var(--color-primary-dark);padding:1rem;border-radius:var(--radius-sm);display:flex;justify-content:space-between;">
-                <span style="color:#fff;font-weight:700;">Saldo Atual</span>
-                <strong id="inv-saldo-atual" style="color:var(--color-accent);font-size:1.3rem;">R$ 0,00</strong>
-              </div>
+          <!-- Resumo de Carteira por Ativo -->
+          <div class="luxury-card" style="grid-column: span 2;">
+            <div class="card-title">Composição da Carteira &amp; Saldos</div>
+            <div id="assets-summary-cards" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; max-height:360px; overflow-y:auto; padding-bottom:10px;">
+              <!-- JS populated small cards with balances of each asset type -->
             </div>
           </div>
         </div>
 
-        <!-- Histórico -->
+        <!-- Histórico Geral Unificado com Filtros -->
         <div class="luxury-card" style="margin-bottom:2rem;">
-          <div class="card-title">Histórico de Movimentações</div>
-          <div class="table-wrapper" style="max-height:300px;overflow-y:auto;">
+          <div class="card-title">Histórico de Transações de Investimentos</div>
+          
+          <!-- Filtros de busca -->
+          <div class="table-filters" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:0.5rem; margin-bottom:1rem;">
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Filtrar Ativo</label>
+              <select id="filter-inv-asset" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;">
+                <option value="">Todos</option>
+                <option value="SELIC">SELIC</option>
+                <option value="CDB">CDB</option>
+                <option value="Tesouro IPCA+">Tesouro IPCA+</option>
+                <option value="LCI/LCA">LCI/LCA</option>
+                <option value="FII">FII</option>
+                <option value="ETF">ETF</option>
+                <option value="Poupança">Poupança</option>
+                <option value="Outro">Outros</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Filtrar Tipo</label>
+              <select id="filter-inv-type" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;">
+                <option value="">Todos</option>
+                <option value="aporte">Aporte</option>
+                <option value="rendimento">Rendimento</option>
+                <option value="saque">Saque</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Data Específica</label>
+              <input type="text" id="filter-inv-date" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;" placeholder="Aaaa-Mm">
+            </div>
+          </div>
+
+          <div class="table-wrapper" style="max-height:300px; overflow-y:auto;">
             <table class="luxury-table">
               <thead>
-                <tr><th>Data</th><th>Tipo</th><th>Onde</th><th>Valor</th><th>Ação</th></tr>
+                <tr>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th>Ativo (Classe)</th>
+                  <th>Específico / Local</th>
+                  <th>Valor</th>
+                  <th>Ação</th>
+                </tr>
               </thead>
-              <tbody id="inv-history-tbody"></tbody>
+              <tbody id="inv-history-tbody">
+                <!-- JS populated -->
+              </tbody>
             </table>
           </div>
         </div>
 
-        <!-- 4 Gráficos -->
-        <h3 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);margin-bottom:1.5rem;font-size:1.5rem;">Visão Estratégica — Gráficos</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem;">
+        <!-- 4 Gráficos do Capítulo -->
+        <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-bottom:1.5rem; font-size:1.5rem;">Visão Estratégica da Carteira</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem;">
           <div class="luxury-card">
-            <div class="card-title">Distribuição de Rendimentos (Pizza)</div>
-            <div style="height:250px;position:relative;"><canvas id="invChartPie"></canvas></div>
+            <div class="card-title">Rendimentos Acumulados por Ativo (Pizza)</div>
+            <div style="height:250px; position:relative;"><canvas id="invChartPie"></canvas></div>
           </div>
           <div class="luxury-card">
-            <div class="card-title">Aportes por Ativo (Barras)</div>
-            <div style="height:250px;position:relative;"><canvas id="invChartBar"></canvas></div>
+            <div class="card-title">Valores Totais Investidos (Barras)</div>
+            <div style="height:250px; position:relative;"><canvas id="invChartBar"></canvas></div>
           </div>
           <div class="luxury-card">
-            <div class="card-title">Evolução Mensal dos Aportes (Linha)</div>
-            <div style="height:250px;position:relative;"><canvas id="invChartLine"></canvas></div>
+            <div class="card-title">Evolução Mensal de Aportes (Linha)</div>
+            <div style="height:250px; position:relative;"><canvas id="invChartLine"></canvas></div>
           </div>
           <div class="luxury-card">
-            <div class="card-title">Panorama Completo (Histograma)</div>
-            <div style="height:250px;position:relative;"><canvas id="invChartHist"></canvas></div>
+            <div class="card-title">Panorama Consolidado (Histograma)</div>
+            <div style="height:250px; position:relative;"><canvas id="invChartHist"></canvas></div>
           </div>
         </div>
       </section>
 
-      <!-- ===================== CAP 8: PROJETO INTERCÂMBIO ===================== -->
+      <!-- ===================== CAP 6: PROJETO INTERCÂMBIO ===================== -->
       <section id="cap8" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo VIII</span>
-          <h2 class="page-title">Projeto Intercâmbio (+1 Ano)</h2>
-          <p class="page-subtitle">Calculadora de custo total, câmbio estimado e controle de investimentos dedicados à viagem.</p>
+          <span class="page-chapter-num">Capítulo VI</span>
+          <h2 class="page-title">Projeto Intercâmbio</h2>
+          <p class="page-subtitle">Planeje seu intercâmbio de longa duração (+1 ano) com controle de custos e câmbio.</p>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2rem;margin-bottom:2rem;">
-          <!-- Planejamento do destino -->
-          <div class="luxury-card">
-            <div class="card-title">Definir Destino e Câmbio</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:2rem; margin-bottom:2rem;">
+          <!-- Destino e Caixinha -->
+          <div class="luxury-card" style="height:fit-content;">
+            <div class="card-title">Planejar Destino</div>
             <div class="form-group">
-              <label class="form-label">Destino Escolhido</label>
-              <input type="text" id="exchange-dest-name" class="form-control" placeholder="Ex: Irlanda 🇮🇪">
+              <label class="form-label">Destino / País</label>
+              <input type="text" id="exchange-dest-name" class="form-control" placeholder="Ex: Malta 🇲🇹, Irlanda 🇮🇪...">
             </div>
-            <div style="display:flex;gap:1rem;">
+            <div style="display:flex; gap:1rem;">
               <div class="form-group" style="flex:1;">
                 <label class="form-label">Duração Mínima</label>
                 <select id="exchange-duration" class="form-control">
-                  <option value="12">12 meses (1 ano)</option>
+                  <option value="12" selected>12 meses (1 ano)</option>
                   <option value="18">18 meses (1,5 ano)</option>
                   <option value="24">24 meses (2 anos)</option>
                 </select>
               </div>
               <div class="form-group" style="flex:1;">
-                <label class="form-label">Câmbio (R$ / 1 und.)</label>
+                <label class="form-label">Taxa de Câmbio (R$)</label>
                 <input type="number" id="exchange-rate" class="form-control" step="0.01" value="6.50">
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Moeda do País (sigla)</label>
-              <input type="text" id="exchange-currency" class="form-control" value="EUR" placeholder="EUR, USD, GBP...">
+              <label class="form-label">Moeda Local (sigla)</label>
+              <input type="text" id="exchange-currency" class="form-control" value="EUR">
             </div>
+            
+            <h4 style="margin-top:1.5rem; margin-bottom:0.5rem; color:var(--color-primary);">Aporte / Depósito na Caixinha</h4>
+            <div class="form-group">
+              <label class="form-label">Aporte Mensal para o Destino (R$)</label>
+              <input type="number" id="exchange-monthly-savings" class="form-control" value="500">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rendimento Estimado da Caixinha (R$ / mês)</label>
+              <input type="number" id="exchange-monthly-yield" class="form-control" value="20">
+            </div>
+            <button id="btn-save-exchange-dest" class="btn-primary" style="width:100%;">
+              <i data-lucide="save"></i> Salvar e Simular Caixinha
+            </button>
           </div>
 
-          <!-- Calculadora de custos -->
+          <!-- Calculadora detalhada dos 11 custos -->
           <div class="luxury-card">
-            <div class="card-title">Calculadora de Custos Detalhada (R$)</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
-              <div><label class="form-label" style="font-size:0.72rem;">Escola / Acomodação</label><input type="number" id="exc-school" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Passagem Aérea</label><input type="number" id="exc-flight" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Passaporte e Visto</label><input type="number" id="exc-visa" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Seguro Viagem</label><input type="number" id="exc-insurance" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Dinheiro Inicial</label><input type="number" id="exc-initial" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Material Escolar</label><input type="number" id="exc-material" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Autocuidado / Saúde</label><input type="number" id="exc-health" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Alimentação (mês)</label><input type="number" id="exc-food" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Transporte (mês)</label><input type="number" id="exc-transport" class="form-control" value="0" step="100"></div>
-              <div><label class="form-label" style="font-size:0.72rem;">Passeios e Lazer (mês)</label><input type="number" id="exc-leisure" class="form-control" value="0" step="100"></div>
+            <div class="card-title">Cálculo dos 11 Itens de Custo (em R$)</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+              <div><label class="form-label" style="font-size:0.7rem;">Escola e Acomodação</label><input type="number" id="exc-school" class="form-control" value="25000"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Passagem Aérea</label><input type="number" id="exc-flight" class="form-control" value="6000"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Passaporte e Visto</label><input type="number" id="exc-visa" class="form-control" value="1200"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Seguro Viagem</label><input type="number" id="exc-insurance" class="form-control" value="2500"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Material Escolar</label><input type="number" id="exc-material" class="form-control" value="800"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Autocuidado (Ano)</label><input type="number" id="exc-selfcare" class="form-control" value="1500"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Saúde (Ano)</label><input type="number" id="exc-health" class="form-control" value="2000"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Alimentação (Ano)</label><input type="number" id="exc-food" class="form-control" value="12000"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Transporte (Ano)</label><input type="number" id="exc-transport" class="form-control" value="3000"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Passeios e Lazer</label><input type="number" id="exc-leisure" class="form-control" value="4000"></div>
+              <div><label class="form-label" style="font-size:0.7rem;">Dinheiro Inicial</label><input type="number" id="exc-initial" class="form-control" value="10000"></div>
             </div>
-            <button id="btn-calc-exchange" class="btn-primary" style="width:100%;margin-top:1rem;">
-              <i data-lucide="calculator"></i> Calcular Custo Total
+            <button id="btn-calc-exchange-costs" class="btn-accent" style="width:100%; margin-top:1rem;">
+              <i data-lucide="calculator"></i> Calcular Custo &amp; Simular
             </button>
           </div>
         </div>
 
-        <!-- Resultado e caixinha -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;">
-          <div class="luxury-card" style="background:linear-gradient(135deg,var(--color-primary-dark),var(--color-primary));color:#fff;">
-            <div class="card-title" style="color:#fff;">Custo Total Estimado</div>
-            <div id="exchange-total-cost" style="font-size:3rem;font-weight:700;color:var(--color-accent);margin:0.5rem 0;">R$ 0,00</div>
-            <p id="exchange-foreign-desc" style="color:rgba(255,255,255,0.7);font-size:0.9rem;">Em moeda local: — 0,00</p>
-            <div style="margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.85rem;">
-              <div><strong style="color:var(--color-accent);">Custos Fixos (Viagem)</strong><br><span id="exc-fixed-total">R$ 0,00</span></div>
-              <div><strong style="color:var(--color-accent);">Custos Mensais x Duração</strong><br><span id="exc-monthly-total">R$ 0,00</span></div>
+        <!-- Painel de Resultados do Intercâmbio -->
+        <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:2rem;">
+          <div class="luxury-card" style="background:linear-gradient(135deg, var(--color-primary-dark), var(--color-primary)); color:#fff; display:flex; flex-direction:column; justify-content:space-between; padding:2rem;">
+            <div>
+              <div class="card-title" style="color:#fff;">Resumo dos Custos da Viagem</div>
+              <div id="exchange-total-cost" style="font-size:2.8rem; font-weight:700; color:var(--color-accent); margin:0.5rem 0;">R$ 0,00</div>
+              <p id="exchange-foreign-desc" style="color:rgba(255,255,255,0.7); font-size:0.95rem; margin-bottom:1.5rem;">Em moeda local: —</p>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; border-top:1px solid rgba(255,255,255,0.15); padding-top:1rem; font-size:0.85rem;">
+              <div><strong>Custo Fixo Pré-Viagem:</strong><br><span id="exc-fixed-total-lbl">R$ 0,00</span></div>
+              <div><strong>Custo de Sobrevivência (Anual):</strong><br><span id="exc-monthly-total-lbl">R$ 0,00</span></div>
             </div>
           </div>
 
+          <!-- Investimento Caixinha Intercâmbio -->
           <div class="luxury-card">
-            <div class="card-title">Caixinha do Intercâmbio 💰</div>
-            <div class="form-group">
-              <label class="form-label">Tipo</label>
-              <select id="exc-inv-type" class="form-control">
-                <option value="aporte">📥 Aporte Mensal</option>
-                <option value="rendimento">📈 Rendimento</option>
-                <option value="saque">📤 Saque</option>
-              </select>
-            </div>
-            <div style="display:flex;gap:1rem;">
-              <div class="form-group" style="flex:1;">
-                <label class="form-label">Valor (R$)</label>
-                <input type="number" id="exc-inv-val" class="form-control" step="0.01">
+            <div class="card-title">Fundo Dedicado ao Intercâmbio</div>
+            
+            <div style="background:var(--color-primary-soft); padding:1rem; border-radius:var(--radius-sm); margin-bottom:1rem; text-align:center;">
+              <p style="font-size:0.8rem; color:var(--color-text-muted); text-transform:uppercase;">Investimento Acumulado</p>
+              <div id="exc-acc-total-val" class="kpi-value" style="font-size:2rem; margin:0.2rem 0;">R$ 0,00</div>
+              <div style="background:var(--color-border); border-radius:20px; height:8px; margin-top:0.6rem; overflow:hidden;">
+                <div id="exc-progress-bar" style="background:var(--color-accent); width:0%; height:100%; transition:width 0.5s;"></div>
               </div>
-              <div class="form-group" style="flex:1;">
-                <label class="form-label">Data</label>
-                <input type="date" id="exc-inv-date" class="form-control">
-              </div>
+              <p id="exc-progress-pct-lbl" style="font-size:0.75rem; color:var(--color-text-muted); margin-top:0.3rem;">0% da meta (Restam R$ 0,00)</p>
             </div>
-            <button id="btn-add-exc-inv" class="btn-accent" style="width:100%;">Adicionar à Caixinha</button>
-            <div style="background:var(--color-primary-soft);padding:1rem;border-radius:var(--radius-sm);margin-top:1rem;text-align:center;">
-              <p style="font-size:0.85rem;color:var(--color-text-muted);">Saldo Acumulado</p>
-              <div id="exc-acc-total" class="kpi-value" style="font-size:2rem;margin:0;">R$ 0,00</div>
-              <div id="exc-progress-bar-wrap" style="margin-top:0.5rem;background:var(--color-border);border-radius:20px;height:8px;">
-                <div id="exc-progress-bar" style="background:var(--color-accent);border-radius:20px;height:8px;width:0%;transition:width 0.5s;"></div>
-              </div>
-              <p id="exc-progress-pct" style="font-size:0.75rem;color:var(--color-text-muted);margin-top:0.3rem;">0% da meta</p>
-            </div>
-          </div>
-
-          <div class="luxury-card" style="grid-column:span 2;">
-            <div class="card-title">Histórico da Caixinha</div>
-            <div class="table-wrapper">
-              <table class="luxury-table">
-                <thead><tr><th>Data</th><th>Tipo</th><th>Valor</th><th>Ação</th></tr></thead>
-                <tbody id="exc-history-tbody"></tbody>
-              </table>
+            
+            <div style="background:var(--color-bg); padding:0.8rem; border-radius:var(--radius-sm); font-size:0.85rem;">
+              Tempo para atingir meta: <strong id="exc-time-to-goal" style="float:right; color:var(--color-primary);">... meses</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ===================== CAP 9: NOVA CARREIRA ===================== -->
+      <!-- ===================== CAP 7: NOVA CARREIRA ===================== -->
       <section id="cap9" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo IX</span>
-          <h2 class="page-title">Explorando Novas Possibilidades</h2>
-          <p class="page-subtitle">Avaliação estratégica de caminhos profissionais.</p>
+          <span class="page-chapter-num">Capítulo VII</span>
+          <h2 class="page-title">Nova Carreira</h2>
+          <p class="page-subtitle">Anotações e planos para a transição de carreira profissional.</p>
         </div>
-        <div class="career-board">
-          <div class="luxury-card">
-            <div class="card-title"><span>Serviço Social</span><span class="badge-country">Graduação</span></div>
-            <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:1rem;">Área de formação principal.</p>
-            <p style="font-size:0.85rem;margin-bottom:0.8rem;"><strong>Positivo:</strong> Concursos públicos, ONGs, CRAS. Estabilidade.</p>
-            <p style="font-size:0.85rem;"><strong>Desafios:</strong> Carga horária rígida, baixa remuneração inicial.</p>
-          </div>
-          <div class="luxury-card">
-            <div class="card-title"><span>Estética &amp; Bem-Estar</span><span class="badge-country">Cursos</span></div>
-            <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:1rem;">Depilação, Massagem e Design de Sobrancelhas.</p>
-            <p style="font-size:0.85rem;margin-bottom:0.8rem;"><strong>Positivo:</strong> Retorno rápido, flexibilidade, autonomia.</p>
-            <p style="font-size:0.85rem;"><strong>Desafios:</strong> Captação de clientes e investimento em insumos.</p>
-          </div>
-          <div class="luxury-card">
-            <div class="card-title"><span>Outros Caminhos</span><span class="badge-country">Exploratório</span></div>
-            <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:1rem;">RH, Concursos, Home Office.</p>
-            <p style="font-size:0.85rem;margin-bottom:0.8rem;"><strong>Positivo:</strong> Liberdade geográfica, conciliação com intercâmbio.</p>
-            <p style="font-size:0.85rem;"><strong>Desafios:</strong> Novos aprendizados ou preparação intensa.</p>
-          </div>
-        </div>
-        <div class="luxury-card" style="margin-top:2rem;">
-          <div class="card-title">Anotações Profissionais</div>
+        <div class="luxury-card">
+          <div class="card-title">Anotações do Plano de Carreira</div>
           <div class="form-group">
-            <label class="form-label">Suas reflexões sobre carreira:</label>
-            <textarea id="career-notes" class="form-control" rows="5" placeholder="Ex: 'Gostaria de testar atendimentos de estética aos sábados...'"></textarea>
+            <label class="form-label">O que você planeja para sua nova jornada profissional?</label>
+            <textarea id="career-notes" class="form-control" rows="8" placeholder="Digite aqui suas ideias, cursos pendentes, planos de captação de clientes..."></textarea>
           </div>
-          <button id="btn-save-career-notes" class="btn-primary">Salvar Anotações</button>
+          <button id="btn-save-career-notes" class="btn-primary">
+            <i data-lucide="save"></i> Salvar Plano de Carreira
+          </button>
         </div>
       </section>
 
-      <!-- ===================== CAP 10: VENDAS NATURA ===================== -->
+      <!-- ===================== CAP 8: REVENDA (CRM & COMPRAS) ===================== -->
       <section id="cap10" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo X</span>
-          <h2 class="page-title">Vendas Natura (Renda Extra)</h2>
-          <p class="page-subtitle">Controle de custo de compra vs. preço de venda. Lucro calculado automaticamente.</p>
+          <span class="page-chapter-num">Capítulo VIII</span>
+          <h2 class="page-title">Gestão de Revenda</h2>
+          <p class="page-subtitle">Acompanhe suas vendas e compras para revenda de forma centralizada. Lucros alimentam o Livro Caixa automaticamente.</p>
         </div>
 
+        <!-- 3 KPIs da Revenda -->
         <div class="card-grid" style="margin-bottom:2rem;">
           <div class="luxury-card">
             <div class="card-title">Faturamento Total</div>
-            <div id="natura-sales-total" class="kpi-value">R$ 0,00</div>
-            <p class="kpi-label">Valor Total de Vendas</p>
+            <div id="revenda-sales-total" class="kpi-value">R$ 0,00</div>
+            <p class="kpi-label">Vendas Registradas</p>
           </div>
           <div class="luxury-card">
-            <div class="card-title">Custo Total</div>
-            <div id="natura-cost-total" class="kpi-value" style="color:#c0392b;">R$ 0,00</div>
-            <p class="kpi-label">Total Gasto na Compra</p>
+            <div class="card-title">Total Gasto em Mercadoria</div>
+            <div id="revenda-purchases-total" class="kpi-value" style="color:#c0392b;">R$ 0,00</div>
+            <p class="kpi-label">Compras Realizadas</p>
           </div>
           <div class="luxury-card">
-            <div class="card-title">Lucro Real Acumulado</div>
-            <div id="natura-total-profit" class="kpi-value" style="color:#1b8a5a;">R$ 0,00</div>
-            <p class="kpi-label">Venda − Custo</p>
+            <div class="card-title">Lucro Líquido Acumulado</div>
+            <div id="revenda-profit-total" class="kpi-value" style="color:#1b8a5a;">R$ 0,00</div>
+            <p class="kpi-label">Venda − Custo das Vendas</p>
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 2fr;gap:2rem;">
-          <div class="luxury-card" style="height:fit-content;">
-            <div class="card-title">Registrar Venda</div>
-            <div class="form-group"><label class="form-label">Cliente</label><input type="text" id="nat-client" class="form-control"></div>
-            <div class="form-group"><label class="form-label">Produto</label><input type="text" id="nat-product" class="form-control"></div>
-            <div class="form-group">
-              <label class="form-label">Custo do Produto (R$)</label>
-              <input type="number" id="nat-cost" class="form-control" step="0.01" placeholder="Quanto você pagou?">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Valor de Venda (R$)</label>
-              <input type="number" id="nat-price" class="form-control" step="0.01" placeholder="Quanto cobrou?">
-            </div>
-            <div class="form-group"><label class="form-label">Data</label><input type="date" id="nat-date" class="form-control"></div>
-            <button id="btn-add-natura" class="btn-primary" style="width:100%;"><i data-lucide="plus-circle"></i> Registrar Venda</button>
-          </div>
+        <div class="inner-tabs" style="margin-bottom:1.5rem;">
+          <button class="tab-btn active" onclick="switchRevendaTab('vendas', event)">Vendas &amp; CRM</button>
+          <button class="tab-btn" onclick="switchRevendaTab('compras', event)">Fluxo de Compras (Estoque)</button>
+        </div>
 
-          <div class="luxury-card">
-            <div class="card-title">Histórico de Vendas</div>
-            <div class="table-wrapper" style="max-height:450px;overflow-y:auto;">
-              <table class="luxury-table">
-                <thead>
-                  <tr><th>Data</th><th>Cliente</th><th>Produto</th><th>Custo</th><th>Venda</th><th>Lucro</th><th>Ação</th></tr>
-                </thead>
-                <tbody id="natura-tbody"></tbody>
-              </table>
+        <!-- Sub-aba VENDAS -->
+        <div id="revenda-vendas" class="revenda-section">
+          <div style="display:grid; grid-template-columns:1fr 2fr; gap:2rem;">
+            <div class="luxury-card" style="height:fit-content;">
+              <div class="card-title">Lançar Nova Venda</div>
+              <div class="form-group">
+                <label class="form-label">Cliente</label>
+                <input type="text" id="rev-client" class="form-control" placeholder="Ex: Mariana Souza">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Produto / Descrição</label>
+                <input type="text" id="rev-product" class="form-control" placeholder="Ex: Kit Natura TodoDia">
+              </div>
+              <div style="display:flex; gap:1rem;">
+                <div class="form-group" style="flex:1;">
+                  <label class="form-label">Custo Compra (R$)</label>
+                  <input type="number" id="rev-cost" class="form-control" step="0.01">
+                </div>
+                <div class="form-group" style="flex:1;">
+                  <label class="form-label">Valor Venda (R$)</label>
+                  <input type="number" id="rev-price" class="form-control" step="0.01">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Data da Venda</label>
+                <input type="date" id="rev-date" class="form-control">
+              </div>
+              <button id="btn-add-revenda-sale" class="btn-primary" style="width:100%;">
+                <i data-lucide="plus-circle"></i> Registrar Venda &amp; Integrar
+              </button>
+            </div>
+
+            <div class="luxury-card">
+              <div class="card-title">Histórico de Vendas</div>
+              <div class="table-wrapper" style="max-height:450px; overflow-y:auto;">
+                <table class="luxury-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Cliente</th>
+                      <th>Produto</th>
+                      <th>Custo</th>
+                      <th>Preço Venda</th>
+                      <th>Lucro</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="revenda-sales-tbody">
+                    <!-- JS populated -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-aba COMPRAS -->
+        <div id="revenda-compras" class="revenda-section" style="display:none;">
+          <div style="display:grid; grid-template-columns:1fr 2fr; gap:2rem;">
+            <div class="luxury-card" style="height:fit-content;">
+              <div class="card-title">Lançar Compra para Revenda</div>
+              <div class="form-group">
+                <label class="form-label">Data da Compra</label>
+                <input type="date" id="pur-date" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Fornecedor</label>
+                <input type="text" id="pur-supplier" class="form-control" placeholder="Ex: Natura, Distribuidora...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Subfornecedor</label>
+                <input type="text" id="pur-subsupplier" class="form-control" placeholder="Ex: Revendedora Autorizada...">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Produto / Lote</label>
+                <input type="text" id="pur-product" class="form-control" placeholder="Ex: Sabonete 20un...">
+              </div>
+              <div style="display:flex; gap:1rem;">
+                <div class="form-group" style="flex:1;">
+                  <label class="form-label">Quantidade</label>
+                  <input type="number" id="pur-qty" class="form-control" min="1" value="1">
+                </div>
+                <div class="form-group" style="flex:1;">
+                  <label class="form-label">Custo Total (R$)</label>
+                  <input type="number" id="pur-price" class="form-control" step="0.01">
+                </div>
+              </div>
+              <button id="btn-add-purchase" class="btn-primary" style="width:100%;">
+                <i data-lucide="package"></i> Registrar Compra
+              </button>
+            </div>
+
+            <div class="luxury-card">
+              <div class="card-title">Histórico de Compras de Mercadorias</div>
+              <div class="table-wrapper" style="max-height:450px; overflow-y:auto;">
+                <table class="luxury-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Fornecedor</th>
+                      <th>Subfornecedor</th>
+                      <th>Produto</th>
+                      <th>Qtd</th>
+                      <th>Valor Total</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="purchase-tbody">
+                    <!-- JS populated -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ===================== CAP 13: FLUXO DE COMPRAS (REVENDA) ===================== -->
-      <section id="cap13" class="book-page">
-        <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo XI</span>
-          <h2 class="page-title">Fluxo de Compras (Revenda)</h2>
-          <p class="page-subtitle">Controle de tudo o que você comprou para revender: fornecedor, produto, data e valor.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 2fr;gap:2rem;">
-          <div class="luxury-card" style="height:fit-content;">
-            <div class="card-title">Registrar Compra</div>
-            <div class="form-group"><label class="form-label">Data da Compra</label><input type="date" id="pur-date" class="form-control"></div>
-            <div class="form-group">
-              <label class="form-label">Fornecedor</label>
-              <input type="text" id="pur-supplier" class="form-control" placeholder="Ex: Natura, Fornecedor X">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Subfornecedor (opcional)</label>
-              <input type="text" id="pur-subsupplier" class="form-control" placeholder="Ex: Distribuidora Y">
-            </div>
-            <div class="form-group"><label class="form-label">Produto</label><input type="text" id="pur-product" class="form-control"></div>
-            <div style="display:flex;gap:1rem;">
-              <div class="form-group" style="flex:1;">
-                <label class="form-label">Quantidade</label>
-                <input type="number" id="pur-qty" class="form-control" min="1" value="1">
-              </div>
-              <div class="form-group" style="flex:1;">
-                <label class="form-label">Preço Total (R$)</label>
-                <input type="number" id="pur-price" class="form-control" step="0.01">
-              </div>
-            </div>
-            <button id="btn-add-purchase" class="btn-primary" style="width:100%;"><i data-lucide="package"></i> Registrar Compra</button>
-          </div>
-
-          <div class="luxury-card">
-            <div class="card-title">Histórico de Compras / Estoque</div>
-            <div class="table-wrapper" style="max-height:450px;overflow-y:auto;">
-              <table class="luxury-table">
-                <thead>
-                  <tr><th>Data</th><th>Fornecedor</th><th>Subfornecedor</th><th>Produto</th><th>Qtd</th><th>Preço Total</th><th>Ação</th></tr>
-                </thead>
-                <tbody id="purchase-tbody"></tbody>
-              </table>
-            </div>
-            <div style="text-align:right;margin-top:1rem;">
-              Total Investido em Estoque: <strong id="purchase-total" style="color:var(--color-primary);font-size:1.3rem;">R$ 0,00</strong>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================== CAP 11: ESPAÇO VICTOR ===================== -->
+      <!-- ===================== CAP 9: ESPAÇO VICTOR ===================== -->
       <section id="cap11" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo XII</span>
-          <h2 class="page-title">Espaço Victor 💚</h2>
-          <p class="page-subtitle">Despesas compartilhadas, análise de gastos e cofrinho para metas em conjunto.</p>
+          <span class="page-chapter-num">Capítulo IX</span>
+          <h2 class="page-title">Espaço Victor</h2>
+          <p class="page-subtitle">Acompanhe despesas conjuntas, visualize análises de gastos e contribua para o cofrinho das metas compartilhadas.</p>
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;margin-bottom:2rem;">
-          <!-- Lançar Despesa -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem; margin-bottom:2rem;">
+          <!-- Lançar Despesa Casal -->
           <div class="luxury-card">
             <div class="card-title">Lançar Despesa do Casal</div>
-            <div class="form-group"><label class="form-label">O que foi?</label><input type="text" id="vic-desc" class="form-control" placeholder="Ex: Jantar fora, Supermercado..."></div>
+            <div class="form-group">
+              <label class="form-label">O que foi? (Item/Descrição)</label>
+              <input type="text" id="vic-desc" class="form-control" placeholder="Ex: Supermercado, Cinema, Pizza...">
+            </div>
             <div class="form-group">
               <label class="form-label">Categoria</label>
               <select id="vic-cat" class="form-control">
@@ -784,101 +872,171 @@
                 <option>Transporte</option>
                 <option>Saúde</option>
                 <option>Moradia</option>
-                <option>Presente / Mimo</option>
+                <option>Presentes / Mimos</option>
                 <option>Outros</option>
               </select>
             </div>
-            <div class="form-group"><label class="form-label">Valor (R$)</label><input type="number" id="vic-val" class="form-control" step="0.01"></div>
+            <div style="display:flex; gap:1rem;">
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Valor (R$)</label>
+                <input type="number" id="vic-val" class="form-control" step="0.01">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Data</label>
+                <input type="date" id="vic-date" class="form-control">
+              </div>
+            </div>
             <div class="form-group">
               <label class="form-label">Forma de Pagamento</label>
               <select id="vic-method" class="form-control">
-                <option>Pix</option><option>Cartão Crédito</option><option>Cartão Débito</option><option>Dinheiro</option>
+                <option>Pix</option>
+                <option>Cartão Crédito (Julia)</option>
+                <option>Cartão Crédito (Victor)</option>
+                <option>Cartão Débito</option>
+                <option>Dinheiro (Espécie)</option>
               </select>
             </div>
-            <div class="form-group"><label class="form-label">Data</label><input type="date" id="vic-date" class="form-control"></div>
-            <button id="btn-add-vic-exp" class="btn-primary" style="width:100%;"><i data-lucide="plus-circle"></i> Adicionar Despesa</button>
+            <button id="btn-add-vic-exp" class="btn-primary" style="width:100%;">
+              <i data-lucide="plus-circle"></i> Registrar Gasto do Casal
+            </button>
           </div>
 
-          <!-- Gráfico de gastos -->
+          <!-- Cofrinho Metas Compartilhadas -->
           <div class="luxury-card">
-            <div class="card-title">Onde gastamos mais? (Gráfico)</div>
-            <div style="height:280px;position:relative;"><canvas id="vicExpensesChart"></canvas></div>
-          </div>
-
-          <!-- Cofrinho -->
-          <div class="luxury-card">
-            <div class="card-title">Cofrinho: Metas em Conjunto <i data-lucide="piggy-bank"></i></div>
+            <div class="card-title">Cofrinho para Metas em Conjunto</div>
             <div class="form-group">
-              <label class="form-label">Movimentação</label>
+              <label class="form-label">Meta Compartilhada Foco</label>
+              <input type="text" id="vic-cof-goal" class="form-control" placeholder="Ex: Viagem Fim de Ano 🏝️">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Valor Alvo (Meta R$)</label>
+              <input type="number" id="vic-cof-target" class="form-control" value="3000">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo de Movimentação</label>
               <select id="vic-cof-type" class="form-control">
-                <option value="deposito">💰 Guardar / Investir</option>
+                <option value="deposito">💰 Depositar / Guardar</option>
                 <option value="rendimento">📈 Rendimento do Mês</option>
-                <option value="saque">📤 Saque</option>
+                <option value="saque">📤 Sacar (Retirada)</option>
               </select>
             </div>
-            <div class="form-group"><label class="form-label">Onde está investido?</label><input type="text" id="vic-cof-loc" class="form-control" placeholder="Ex: Poupança, Nubank..."></div>
-            <div style="display:flex;gap:1rem;">
-              <div class="form-group" style="flex:1;"><label class="form-label">Valor (R$)</label><input type="number" id="vic-cof-val" class="form-control" step="0.01"></div>
-              <div class="form-group" style="flex:1;"><label class="form-label">Data</label><input type="date" id="vic-cof-date" class="form-control"></div>
+            <div class="form-group">
+              <label class="form-label">Investido Onde?</label>
+              <input type="text" id="vic-cof-loc" class="form-control" placeholder="Ex: CDB Liquidez Nubank...">
             </div>
-            <button id="btn-add-vic-cof" class="btn-accent" style="width:100%;">Registrar no Cofrinho</button>
-            <div style="background:var(--color-primary-dark);padding:1.5rem;border-radius:var(--radius-md);margin-top:1.5rem;text-align:center;">
-              <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Saldo Total no Cofrinho</p>
-              <div id="vic-cof-total" style="font-size:2.5rem;font-weight:700;color:var(--color-accent);">R$ 0,00</div>
+            <div style="display:flex; gap:1rem;">
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Valor (R$)</label>
+                <input type="number" id="vic-cof-val" class="form-control" step="0.01">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Data</label>
+                <input type="date" id="vic-cof-date" class="form-control">
+              </div>
+            </div>
+            <button id="btn-add-vic-cof" class="btn-accent" style="width:100%;">
+              <i data-lucide="piggy-bank"></i> Lançar no Cofrinho
+            </button>
+          </div>
+
+          <!-- Painel Resumo Cofrinho com Barra de Progresso e % -->
+          <div class="luxury-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div class="card-title">Progresso Cofrinho Victor &amp; Júlia</div>
+              <div style="background:var(--color-primary-soft); padding:1.5rem; border-radius:var(--radius-md); text-align:center; margin-bottom:1rem;">
+                <p style="font-size:0.8rem; color:var(--color-text-muted); text-transform:uppercase;">Saldo no Cofrinho</p>
+                <div id="vic-cof-total" class="kpi-value" style="font-size:2.5rem; margin:0.3rem 0; color:var(--color-primary-dark);">R$ 0,00</div>
+                <div style="background:var(--color-border); border-radius:20px; height:10px; margin-top:0.8rem; overflow:hidden;">
+                  <div id="vic-cof-progress-bar" style="background:var(--color-accent); height:100%; width:0%; transition:width 0.5s;"></div>
+                </div>
+                <p id="vic-cof-progress-pct" style="font-size:0.8rem; color:var(--color-text-muted); margin-top:0.4rem;">0% da meta de R$ 0,00</p>
+              </div>
+            </div>
+            <div style="background:var(--color-bg); padding:1rem; border-radius:var(--radius-sm); font-size:0.85rem;">
+              Falta economizar: <strong id="vic-cof-missing-val" style="color:#c0392b; float:right;">R$ 0,00</strong>
             </div>
           </div>
         </div>
 
-        <!-- Histórico Victor -->
-        <div class="luxury-card">
-          <div class="card-title">Histórico Completo — Espaço Victor</div>
-          <div class="table-wrapper">
-            <table class="luxury-table">
-              <thead>
-                <tr><th>Data</th><th>Tipo</th><th>Descrição / Local</th><th>Categoria</th><th>Forma</th><th>Valor</th></tr>
-              </thead>
-              <tbody id="vic-history-tbody"></tbody>
-            </table>
+        <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:2rem; margin-top:2rem;">
+          <!-- Histórico Completo Espaço Victor -->
+          <div class="luxury-card">
+            <div class="card-title">Histórico Geral (Despesas e Cofrinho)</div>
+            <div class="table-wrapper" style="max-height:350px; overflow-y:auto;">
+              <table class="luxury-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Descrição / Local</th>
+                    <th>Categoria</th>
+                    <th>Forma Pgto</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="vic-history-tbody">
+                  <!-- JS populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Gráfico de Gastos por Categoria -->
+          <div class="luxury-card">
+            <div class="card-title">Gráfico de Gastos Victor &amp; Júlia</div>
+            <div style="height:250px; position:relative;"><canvas id="vicExpensesChart"></canvas></div>
           </div>
         </div>
       </section>
 
-      <!-- ===================== CAP 12: DIÁRIO DO FUTURO ===================== -->
+      <!-- ===================== CAP 10: DIÁRIO DO FUTURO ===================== -->
       <section id="cap12" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo XIII</span>
+          <span class="page-chapter-num">Capítulo X</span>
           <h2 class="page-title">Diário do Futuro</h2>
-          <p class="page-subtitle">Seu Mood Board inspiracional e diário de gratidão.</p>
+          <p class="page-subtitle">Guarde fotos inspiradoras, lembranças especiais e suas anotações mais importantes.</p>
         </div>
+
         <div class="inner-tabs">
           <button class="tab-btn active" onclick="switchDiaryTab('mood', event)">Visual Mood Board</button>
           <button class="tab-btn" onclick="switchDiaryTab('gratitude', event)">Diário de Gratidão</button>
           <button class="tab-btn" onclick="switchDiaryTab('learnings', event)">Aprendizados &amp; Ideias</button>
         </div>
+
+        <!-- Moodboard -->
         <div id="diary-mood" class="diary-section active">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-            <h3 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);">Painel de Inspiração</h3>
-            <button class="btn-outline" onclick="openMoodModal()">+ Adicionar Item</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark);">Painel de Inspiração (Visão)</h3>
+            <button class="btn-outline" onclick="openMoodModal()">+ Adicionar ao Painel</button>
           </div>
-          <div class="mood-grid" id="moodboard-grid"></div>
+          <div class="mood-grid" id="moodboard-grid">
+            <!-- JS populated -->
+          </div>
         </div>
+
+        <!-- Gratidão -->
         <div id="diary-gratitude" class="diary-section" style="display:none;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-            <h3 style="font-family:'Playfair Display',serif;color:var(--color-primary-dark);">O que aconteceu de bom?</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark);">Diário de Gratidão</h3>
             <button class="btn-outline" onclick="openGratitudeModal()">+ Nova Lembrança</button>
           </div>
-          <div id="gratitude-list"></div>
+          <div id="gratitude-list">
+            <!-- JS populated -->
+          </div>
         </div>
+
+        <!-- Aprendizados -->
         <div id="diary-learnings" class="diary-section" style="display:none;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
             <div class="luxury-card">
               <div class="card-title">Aprendizados Financeiros</div>
-              <textarea id="learnings-textarea" class="form-control" rows="8" placeholder="Ex: 'Aprendi que o Tesouro IPCA+ me protege da inflação...'"></textarea>
+              <textarea id="learnings-textarea" class="form-control" rows="8" placeholder="Ex: Guardar na Poupança não compensa, prefira Tesouro Selic..."></textarea>
               <button id="btn-save-learnings" class="btn-primary" style="margin-top:1rem;">Salvar Aprendizados</button>
             </div>
             <div class="luxury-card">
-              <div class="card-title">Novas Ideias de Negócios</div>
-              <textarea id="ideas-textarea" class="form-control" rows="8" placeholder="Ex: 'Ideia: Pacotes de depilação + design para formandas...'"></textarea>
+              <div class="card-title">Novas Ideias &amp; Empreendedorismo</div>
+              <textarea id="ideas-textarea" class="form-control" rows="8" placeholder="Ex: Pacotes casados de Estética..."></textarea>
               <button id="btn-save-ideas" class="btn-primary" style="margin-top:1rem;">Salvar Ideias</button>
             </div>
           </div>
@@ -888,14 +1046,33 @@
     </main>
   </div>
 
-  <!-- ===================== MODALS ===================== -->
+  <!-- ===================== CONFIRMATION DIALOG MODAL (2-FACTOR) ===================== -->
+  <div id="confirm-modal" class="modal-overlay">
+    <div class="modal-container" style="max-width:400px; text-align:center;">
+      <i data-lucide="alert-triangle" style="width:48px; height:48px; color:#e67e22; margin-bottom:1rem; display:inline-block;"></i>
+      <h3 class="modal-header" style="border:none; margin:0; padding:0;">Excluir Registro?</h3>
+      <p style="font-size:0.9rem; color:var(--color-text-main); margin:1rem 0 1.5rem 0;">Tem certeza que deseja apagar essa informação? Esta ação não pode ser desfeita.</p>
+      <div style="display:flex; gap:1rem; justify-content:center;">
+        <button id="btn-confirm-delete-no" class="btn-outline" style="flex:1; padding:0.6rem 1rem;">Cancelar</button>
+        <button id="btn-confirm-delete-yes" class="btn-accent" style="flex:1; padding:0.6rem 1rem; background-color:#c0392b; border-color:#c0392b;">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODALS FOR DIÁRIO / META ===================== -->
   <div id="mood-modal" class="modal-overlay">
     <div class="modal-container">
       <button class="modal-close" onclick="closeMoodModal()">&times;</button>
       <h3 class="modal-header">Adicionar ao Mood Board</h3>
-      <div class="form-group"><label class="form-label">Título</label><input type="text" id="mood-input-title" class="form-control"></div>
-      <div class="form-group"><label class="form-label">URL da Imagem</label><input type="text" id="mood-input-url" class="form-control" placeholder="Cole um link de imagem aqui"></div>
-      <button onclick="saveMoodItem()" class="btn-primary" style="width:100%;">Salvar Imagem</button>
+      <div class="form-group">
+        <label class="form-label">Título</label>
+        <input type="text" id="mood-input-title" class="form-control" placeholder="Ex: Minha viagem, Casa própria...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL da Imagem</label>
+        <input type="text" id="mood-input-url" class="form-control" placeholder="Cole link da imagem (ex: unsplash)">
+      </div>
+      <button onclick="saveMoodItem()" class="btn-primary" style="width: 100%;">Salvar Imagem</button>
     </div>
   </div>
 
@@ -903,9 +1080,64 @@
     <div class="modal-container">
       <button class="modal-close" onclick="closeGratitudeModal()">&times;</button>
       <h3 class="modal-header">Nova Lembrança de Gratidão</h3>
-      <div class="form-group"><label class="form-label">Período (Ex: Julho de 2026)</label><input type="text" id="gratitude-input-date" class="form-control"></div>
-      <div class="form-group"><label class="form-label">O que aconteceu de bom?</label><textarea id="gratitude-input-text" class="form-control" rows="3"></textarea></div>
-      <button onclick="saveGratitudeItem()" class="btn-primary" style="width:100%;">Salvar Lembrança</button>
+      <div class="form-group">
+        <label class="form-label">Data/Período</label>
+        <input type="text" id="gratitude-input-date" class="form-control" placeholder="Ex: Agosto de 2026">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Motivo do Agradecimento</label>
+        <textarea id="gratitude-input-text" class="form-control" rows="3" placeholder="Escreva a lembrança especial aqui..."></textarea>
+      </div>
+      <button onclick="saveGratitudeItem()" class="btn-primary" style="width: 100%;">Salvar Lembrança</button>
+    </div>
+  </div>
+
+  <div id="caixinha-modal" class="modal-overlay">
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeCaixinhaModal()">&times;</button>
+      <h3 class="modal-header">Criar Nova Caixinha de Meta</h3>
+      <div class="form-group">
+        <label class="form-label">Nome da Meta</label>
+        <input type="text" id="caixinha-name" class="form-control" placeholder="Ex: Celular Novo, Computador...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valor Alvo da Meta (R$)</label>
+        <input type="number" id="caixinha-target" class="form-control" step="0.01" placeholder="Ex: 2500.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valor Inicial Depositado (R$)</label>
+        <input type="number" id="caixinha-current" class="form-control" step="0.01" value="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Local do Investimento</label>
+        <input type="text" id="caixinha-loc" class="form-control" placeholder="Ex: Tesouro Selic, Poupança...">
+      </div>
+      <button onclick="saveCaixinha()" class="btn-primary" style="width:100%;">Criar Caixinha</button>
+    </div>
+  </div>
+
+  <!-- Modal para Depósito/Saque em Caixinha existente -->
+  <div id="caixinha-action-modal" class="modal-overlay">
+    <div class="modal-container" style="max-width:400px;">
+      <button class="modal-close" onclick="closeCaixinhaActionModal()">&times;</button>
+      <h3 class="modal-header" id="caixinha-action-title">Movimentar Caixinha</h3>
+      <input type="hidden" id="caixinha-action-id">
+      <div class="form-group">
+        <label class="form-label">Tipo de Movimentação</label>
+        <select id="caixinha-action-type" class="form-control">
+          <option value="deposito">📥 Guardar / Depositar</option>
+          <option value="saque">📤 Sacar / Retirar</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valor (R$)</label>
+        <input type="number" id="caixinha-action-val" class="form-control" step="0.01" min="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Data</label>
+        <input type="date" id="caixinha-action-date" class="form-control">
+      </div>
+      <button onclick="submitCaixinhaAction()" class="btn-primary" style="width:100%;">Confirmar Movimentação</button>
     </div>
   </div>
 
