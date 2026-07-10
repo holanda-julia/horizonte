@@ -13,8 +13,10 @@
 
   <!-- UNIVERSAL TOP HEADER -->
   <header id="top-header">
-    <button id="menu-toggle" aria-label="Abrir menu">
-      <i data-lucide="menu"></i>
+    <button id="menu-toggle" aria-label="Abrir menu" class="hamburger-btn">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
     </button>
     <div class="header-title">
       <span class="header-logo">Projeto Horizonte</span>
@@ -42,15 +44,12 @@
       <nav class="chapters-list">
         <ul>
           <li class="chapter-item"><button class="chapter-btn active" data-target="cap1"><i data-lucide="compass"></i> Cap 1. Capa &amp; Metas</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap2"><i data-lucide="book-open"></i> Cap 2. Minha História</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap3"><i data-lucide="book"></i> Cap 3. Livro Caixa</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap5"><i data-lucide="shield-alert"></i> Cap 4. Eliminando Dívidas</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap6"><i data-lucide="shield-check"></i> Cap 5. Reserva &amp; Investimentos</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap8"><i data-lucide="plane"></i> Cap 6. Projeto Intercâmbio</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap9"><i data-lucide="briefcase"></i> Cap 7. Nova Carreira</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap10"><i data-lucide="shopping-bag"></i> Cap 8. Revenda (CRM &amp; Compras)</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap11"><i data-lucide="heart"></i> Cap 9. Espaço Victor</button></li>
-          <li class="chapter-item"><button class="chapter-btn" data-target="cap12"><i data-lucide="pen-tool"></i> Cap 10. Diário do Futuro</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap3"><i data-lucide="book"></i> Cap 2. Livro Caixa</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap5"><i data-lucide="shield-alert"></i> Cap 3. Eliminando Dívidas</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap6"><i data-lucide="shield-check"></i> Cap 4. Reserva &amp; Investimentos</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap8"><i data-lucide="plane"></i> Cap 5. Projeto Intercâmbio</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap10"><i data-lucide="shopping-bag"></i> Cap 6. Revenda (CRM &amp; Compras)</button></li>
+          <li class="chapter-item"><button class="chapter-btn" data-target="cap11"><i data-lucide="heart"></i> Cap 7. Espaço Victor</button></li>
         </ul>
       </nav>
 
@@ -122,35 +121,40 @@
 
         <!-- 6 KPIs INTEGRADOS -->
         <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-          <div class="luxury-card">
+          <div class="luxury-card kpi-clickable" onclick="switchTab('cap3')" title="Ver Livro Caixa">
             <div class="card-title"><span>Saldo Acumulado</span><i data-lucide="activity"></i></div>
             <div id="general-status-value" class="kpi-value value-negative">R$ 0,00</div>
             <p class="kpi-label">Livro Caixa Atual</p>
+            <span class="kpi-nav-hint">Ver detalhes →</span>
           </div>
-          <div class="luxury-card">
+          <div class="luxury-card kpi-clickable" onclick="switchTab('cap5')" title="Ver Eliminando Dívidas">
             <div class="card-title"><span>Dívidas Restantes</span><i data-lucide="credit-card"></i></div>
             <div id="debts-total-value" class="kpi-value">R$ 0,00</div>
             <p class="kpi-label">Pagar a Terceiros</p>
+            <span class="kpi-nav-hint">Ver detalhes →</span>
           </div>
-          <div class="luxury-card">
+          <div class="luxury-card kpi-clickable" onclick="switchTab('cap6')" title="Ver Reserva & Investimentos">
             <div class="card-title"><span>Reserva Emergencial</span><i data-lucide="shield"></i></div>
             <div id="reserve-progress-value" class="kpi-value">R$ 0,00</div>
             <p class="kpi-label">Meta: R$ 6.000,00</p>
+            <span class="kpi-nav-hint">Ver detalhes →</span>
           </div>
-          <div class="luxury-card">
+          <div class="luxury-card kpi-clickable" onclick="switchTab('cap8')" title="Ver Projeto Intercâmbio">
             <div class="card-title"><span>Intercâmbio</span><i data-lucide="plane"></i></div>
             <div id="exchange-progress-value" class="kpi-value">0%</div>
             <p class="kpi-label">Meta do Destino</p>
+            <span class="kpi-nav-hint">Ver detalhes →</span>
           </div>
           <div class="luxury-card">
             <div class="card-title"><span>Dízimo (10%)</span><i data-lucide="leaf"></i></div>
             <div id="tith-total-value" class="kpi-value" style="color: #1b8a5a;">R$ 0,00</div>
             <p class="kpi-label">Sobre Receitas Totais</p>
           </div>
-          <div class="luxury-card">
+          <div class="luxury-card kpi-clickable" onclick="switchTab('cap11')" title="Ver Espaço Victor">
             <div class="card-title"><span>Cofrinho Victor</span><i data-lucide="heart"></i></div>
             <div id="vic-cof-cap1-value" class="kpi-value">R$ 0,00</div>
             <p class="kpi-label">Metas Compartilhadas</p>
+            <span class="kpi-nav-hint">Ver detalhes →</span>
           </div>
         </div>
 
@@ -179,44 +183,11 @@
         </div>
       </section>
 
-      <!-- ===================== CAP 2: MINHA HISTÓRIA ===================== -->
-      <section id="cap2" class="book-page">
-        <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo II</span>
-          <h2 class="page-title">Minha História &amp; Objetivos</h2>
-          <p class="page-subtitle">Quem sou eu, meus talentos e o destino onde quero chegar.</p>
-        </div>
-        <div style="display:grid; grid-template-columns:2fr 1fr; gap:2rem;">
-          <div style="background:#fff; padding:2rem; border-radius:var(--radius-md); border:1px solid var(--color-border);">
-            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-bottom:1rem;">O Meu Perfil Profissional</h3>
-            <p style="margin-bottom:1rem;">Formada em <strong>Serviço Social</strong> e com qualificações em <strong>Estética</strong> (Massagem, Depilação e Design de Sobrancelhas).</p>
-            <p style="margin-bottom:1rem;">Consultora de <strong>Revenda</strong> como renda extra. Objetivo: organizar a vida financeira e tomar decisões com liberdade, sem o desespero do vermelho mensal.</p>
-            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-top:2rem; margin-bottom:1rem;">Metas de Longo Prazo</h3>
-            <ul style="padding-left:1.5rem; margin-bottom:1rem;">
-              <li style="margin-bottom:0.5rem;"><strong>Meta 1:</strong> Eliminar todas as dívidas com familiares e amigos.</li>
-              <li style="margin-bottom:0.5rem;"><strong>Meta 2:</strong> Reserva Emergencial de R$ 6.000,00.</li>
-              <li style="margin-bottom:0.5rem;"><strong>Meta 3:</strong> Intercâmbio no exterior (+1 ano).</li>
-              <li style="margin-bottom:0.5rem;"><strong>Meta 4:</strong> Transição de carreira consciente.</li>
-            </ul>
-          </div>
-          <div style="display:flex; flex-direction:column; gap:1.5rem;">
-            <div style="background:var(--color-primary-soft); padding:1.5rem; border-radius:var(--radius-md); border:1px solid var(--color-accent);">
-              <h4 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark); margin-bottom:0.5rem;">Identidade Visual</h4>
-              <p style="font-size:0.85rem; color:var(--color-text-main);">A paleta <strong>Luxury</strong>: Verde Esmeralda = crescimento, Dourado = valor dos seus objetivos, Branco = clareza mental.</p>
-            </div>
-            <div style="background:#fff; padding:1.5rem; border-radius:var(--radius-md); border:1px solid var(--color-border); text-align:center;">
-              <i data-lucide="award" style="font-size:3rem; color:var(--color-accent); margin-bottom:1rem;"></i>
-              <h4 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark);">Valores Pessoais</h4>
-              <p style="font-size:0.85rem; color:var(--color-text-muted); margin-top:0.5rem;">Segurança • Organização • Independência • Realização • Gratidão</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <!-- ===================== CAP 3: LIVRO CAIXA ===================== -->
       <section id="cap3" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo III</span>
+          <span class="page-chapter-num">Capítulo II</span>
           <h2 class="page-title">Livro Caixa Integrado</h2>
           <p class="page-subtitle">Acompanhe e registre todas as suas receitas e despesas. Os salários e extras são registrados aqui.</p>
         </div>
@@ -355,12 +326,51 @@
             </table>
           </div>
         </div>
+
+        <!-- SEÇÃO: Orçamento Planilha (dados do Google Sheets) -->
+        <div class="luxury-card" style="margin-top:2rem;">
+          <div class="card-title">
+            <span>📊 Planejamento Mensal (Google Sheets)</span>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <select id="orcamento-year-filter" class="form-control" style="padding:0.3rem 0.6rem; font-size:0.8rem; width:auto;" onchange="renderOrcamentoTable()">
+                <option value="Julho2026">Julho/2026</option>
+                <option value="jan2027">Janeiro/2027</option>
+              </select>
+              <button id="btn-sync-sheets" class="btn-outline" style="font-size:0.75rem; padding:0.35rem 0.7rem;" onclick="openSheetsSyncModal()">
+                <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i> Sincronizar
+              </button>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:1rem;">Visualize o orçamento mensal importado das planilhas. Os dados de Julho/2026 e Jan/2027 já estão carregados.</p>
+          <div class="table-wrapper" style="max-height:400px; overflow-y:auto;">
+            <table class="luxury-table" id="orcamento-table">
+              <thead>
+                <tr>
+                  <th>Mês</th>
+                  <th>Santander</th>
+                  <th>PicPay</th>
+                  <th>Nubank</th>
+                  <th>Nubank Empr.</th>
+                  <th>Titia Solange</th>
+                  <th>Camila</th>
+                  <th>Total Débitos</th>
+                  <th>Salário</th>
+                  <th>Saldo</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="orcamento-tbody">
+                <!-- JS populated from spreadsheet data -->
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
       <!-- ===================== CAP 4: ELIMINANDO DÍVIDAS ===================== -->
       <section id="cap5" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo IV</span>
+          <span class="page-chapter-num">Capítulo III</span>
           <h2 class="page-title">Eliminando Minhas Dívidas</h2>
           <p class="page-subtitle">Gerencie suas dívidas de forma manual. Edite valores iniciais, adicione credores e registre parcelas pagas.</p>
         </div>
@@ -378,8 +388,20 @@
               <input type="number" id="creditor-initial-val" class="form-control" step="0.01" placeholder="Ex: 500.00">
             </div>
             <div class="form-group">
-              <label class="form-label">Próximo Vencimento (Dia do Mês)</label>
+              <label class="form-label">Tipo de Vencimento</label>
+              <select id="creditor-due-type" class="form-control" onchange="toggleDueDayField()">
+                <option value="fixed">Dia fixo do mês</option>
+                <option value="flexible">Quando tiver dinheiro (sem data fixa)</option>
+                <option value="date">Data específica (dia/mês/ano)</option>
+              </select>
+            </div>
+            <div id="creditor-due-day-wrap" class="form-group">
+              <label class="form-label">Dia do Mês (1–31)</label>
               <input type="number" id="creditor-due-day" class="form-control" min="1" max="31" value="10">
+            </div>
+            <div id="creditor-due-date-wrap" class="form-group" style="display:none;">
+              <label class="form-label">Data Específica</label>
+              <input type="date" id="creditor-due-date" class="form-control">
             </div>
             <button id="btn-add-creditor" class="btn-primary" style="width:100%;">
               <i data-lucide="plus-circle"></i> Adicionar / Editar Credor
@@ -443,7 +465,7 @@
       <!-- ===================== CAP 5: RESERVA & INVESTIMENTOS ===================== -->
       <section id="cap6" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo V</span>
+          <span class="page-chapter-num">Capítulo IV</span>
           <h2 class="page-title">Reserva &amp; Investimentos</h2>
           <p class="page-subtitle">Acompanhe sua carteira geral e o progresso da sua reserva de emergência no mesmo lugar.</p>
         </div>
@@ -504,7 +526,7 @@
           <div class="card-title">Histórico de Transações de Investimentos</div>
           
           <!-- Filtros de busca -->
-          <div class="table-filters" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:0.5rem; margin-bottom:1rem;">
+          <div class="table-filters" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:0.5rem; margin-bottom:1rem; align-items:end;">
             <div>
               <label class="form-label" style="font-size:0.7rem;">Filtrar Ativo</label>
               <select id="filter-inv-asset" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;">
@@ -529,8 +551,13 @@
               </select>
             </div>
             <div>
-              <label class="form-label" style="font-size:0.7rem;">Data Específica</label>
-              <input type="text" id="filter-inv-date" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;" placeholder="Aaaa-Mm">
+              <label class="form-label" style="font-size:0.7rem;">Mês/Ano (aaaa-mm)</label>
+              <input type="text" id="filter-inv-date" class="form-control" style="padding:0.4rem 0.6rem; font-size:0.8rem;" placeholder="Ex: 2026-07">
+            </div>
+            <div style="display:flex; align-items:flex-end;">
+              <button id="btn-apply-inv-filter" class="btn-primary" style="width:100%; padding:0.42rem 0.6rem; font-size:0.8rem;">
+                <i data-lucide="search" style="width:14px;height:14px;"></i> Filtrar
+              </button>
             </div>
           </div>
 
@@ -680,24 +707,6 @@
         </div>
       </section>
 
-      <!-- ===================== CAP 7: NOVA CARREIRA ===================== -->
-      <section id="cap9" class="book-page">
-        <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo VII</span>
-          <h2 class="page-title">Nova Carreira</h2>
-          <p class="page-subtitle">Anotações e planos para a transição de carreira profissional.</p>
-        </div>
-        <div class="luxury-card">
-          <div class="card-title">Anotações do Plano de Carreira</div>
-          <div class="form-group">
-            <label class="form-label">O que você planeja para sua nova jornada profissional?</label>
-            <textarea id="career-notes" class="form-control" rows="8" placeholder="Digite aqui suas ideias, cursos pendentes, planos de captação de clientes..."></textarea>
-          </div>
-          <button id="btn-save-career-notes" class="btn-primary">
-            <i data-lucide="save"></i> Salvar Plano de Carreira
-          </button>
-        </div>
-      </section>
 
       <!-- ===================== CAP 8: REVENDA (CRM & COMPRAS) ===================== -->
       <section id="cap10" class="book-page">
@@ -851,7 +860,7 @@
       <!-- ===================== CAP 9: ESPAÇO VICTOR ===================== -->
       <section id="cap11" class="book-page">
         <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo IX</span>
+          <span class="page-chapter-num">Capítulo VII</span>
           <h2 class="page-title">Espaço Victor</h2>
           <p class="page-subtitle">Acompanhe despesas conjuntas, visualize análises de gastos e contribua para o cofrinho das metas compartilhadas.</p>
         </div>
@@ -867,14 +876,19 @@
             <div class="form-group">
               <label class="form-label">Categoria</label>
               <select id="vic-cat" class="form-control">
-                <option>Alimentação</option>
+              <option>Alimentação</option>
                 <option>Lazer &amp; Passeios</option>
                 <option>Transporte</option>
                 <option>Saúde</option>
                 <option>Moradia</option>
                 <option>Presentes / Mimos</option>
-                <option>Outros</option>
+                <option value="Outros">Outros</option>
               </select>
+            </div>
+            <!-- Campo dinâmico para categoria Outros -->
+            <div class="form-group" id="vic-other-cat-wrap" style="display:none;">
+              <label class="form-label">Especificar "Outros"</label>
+              <input type="text" id="vic-other-cat-val" class="form-control" placeholder="Descreva o tipo de gasto...">
             </div>
             <div style="display:flex; gap:1rem;">
               <div class="form-group" style="flex:1;">
@@ -990,58 +1004,6 @@
         </div>
       </section>
 
-      <!-- ===================== CAP 10: DIÁRIO DO FUTURO ===================== -->
-      <section id="cap12" class="book-page">
-        <div class="page-title-section">
-          <span class="page-chapter-num">Capítulo X</span>
-          <h2 class="page-title">Diário do Futuro</h2>
-          <p class="page-subtitle">Guarde fotos inspiradoras, lembranças especiais e suas anotações mais importantes.</p>
-        </div>
-
-        <div class="inner-tabs">
-          <button class="tab-btn active" onclick="switchDiaryTab('mood', event)">Visual Mood Board</button>
-          <button class="tab-btn" onclick="switchDiaryTab('gratitude', event)">Diário de Gratidão</button>
-          <button class="tab-btn" onclick="switchDiaryTab('learnings', event)">Aprendizados &amp; Ideias</button>
-        </div>
-
-        <!-- Moodboard -->
-        <div id="diary-mood" class="diary-section active">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark);">Painel de Inspiração (Visão)</h3>
-            <button class="btn-outline" onclick="openMoodModal()">+ Adicionar ao Painel</button>
-          </div>
-          <div class="mood-grid" id="moodboard-grid">
-            <!-- JS populated -->
-          </div>
-        </div>
-
-        <!-- Gratidão -->
-        <div id="diary-gratitude" class="diary-section" style="display:none;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-            <h3 style="font-family:'Playfair Display',serif; color:var(--color-primary-dark);">Diário de Gratidão</h3>
-            <button class="btn-outline" onclick="openGratitudeModal()">+ Nova Lembrança</button>
-          </div>
-          <div id="gratitude-list">
-            <!-- JS populated -->
-          </div>
-        </div>
-
-        <!-- Aprendizados -->
-        <div id="diary-learnings" class="diary-section" style="display:none;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
-            <div class="luxury-card">
-              <div class="card-title">Aprendizados Financeiros</div>
-              <textarea id="learnings-textarea" class="form-control" rows="8" placeholder="Ex: Guardar na Poupança não compensa, prefira Tesouro Selic..."></textarea>
-              <button id="btn-save-learnings" class="btn-primary" style="margin-top:1rem;">Salvar Aprendizados</button>
-            </div>
-            <div class="luxury-card">
-              <div class="card-title">Novas Ideias &amp; Empreendedorismo</div>
-              <textarea id="ideas-textarea" class="form-control" rows="8" placeholder="Ex: Pacotes casados de Estética..."></textarea>
-              <button id="btn-save-ideas" class="btn-primary" style="margin-top:1rem;">Salvar Ideias</button>
-            </div>
-          </div>
-        </div>
-      </section>
 
     </main>
   </div>
@@ -1059,38 +1021,7 @@
     </div>
   </div>
 
-  <!-- ===================== MODALS FOR DIÁRIO / META ===================== -->
-  <div id="mood-modal" class="modal-overlay">
-    <div class="modal-container">
-      <button class="modal-close" onclick="closeMoodModal()">&times;</button>
-      <h3 class="modal-header">Adicionar ao Mood Board</h3>
-      <div class="form-group">
-        <label class="form-label">Título</label>
-        <input type="text" id="mood-input-title" class="form-control" placeholder="Ex: Minha viagem, Casa própria...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">URL da Imagem</label>
-        <input type="text" id="mood-input-url" class="form-control" placeholder="Cole link da imagem (ex: unsplash)">
-      </div>
-      <button onclick="saveMoodItem()" class="btn-primary" style="width: 100%;">Salvar Imagem</button>
-    </div>
-  </div>
-
-  <div id="gratitude-modal" class="modal-overlay">
-    <div class="modal-container">
-      <button class="modal-close" onclick="closeGratitudeModal()">&times;</button>
-      <h3 class="modal-header">Nova Lembrança de Gratidão</h3>
-      <div class="form-group">
-        <label class="form-label">Data/Período</label>
-        <input type="text" id="gratitude-input-date" class="form-control" placeholder="Ex: Agosto de 2026">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Motivo do Agradecimento</label>
-        <textarea id="gratitude-input-text" class="form-control" rows="3" placeholder="Escreva a lembrança especial aqui..."></textarea>
-      </div>
-      <button onclick="saveGratitudeItem()" class="btn-primary" style="width: 100%;">Salvar Lembrança</button>
-    </div>
-  </div>
+  <!-- ===================== MODALS FOR META ===================== -->
 
   <div id="caixinha-modal" class="modal-overlay">
     <div class="modal-container">
@@ -1138,6 +1069,30 @@
         <input type="date" id="caixinha-action-date" class="form-control">
       </div>
       <button onclick="submitCaixinhaAction()" class="btn-primary" style="width:100%;">Confirmar Movimentação</button>
+    </div>
+  </div>
+
+  <!-- Modal Sincronizar Google Sheets -->
+  <div id="sheets-sync-modal" class="modal-overlay">
+    <div class="modal-container" style="max-width:540px;">
+      <button class="modal-close" onclick="closeSheetsSyncModal()">&times;</button>
+      <h3 class="modal-header">🔄 Sincronizar com Google Planilhas</h3>
+      <p style="font-size:0.87rem; color:var(--color-text-muted); margin-bottom:1.2rem;">Para sincronizar, publique sua planilha via <strong>Arquivo → Publicar na Web → CSV</strong> e cole o link abaixo. Alternativamente, cole o JSON exportado da planilha.</p>
+      <div class="form-group">
+        <label class="form-label">Link CSV (Publicado na web)</label>
+        <input type="text" id="sheets-url-input" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv">
+      </div>
+      <div style="text-align:center; padding:0.5rem 0; color:var(--color-text-muted); font-size:0.85rem;">— ou —</div>
+      <div class="form-group">
+        <label class="form-label">Colar JSON da Planilha</label>
+        <textarea id="sheets-json-input" class="form-control" rows="5" placeholder='Cole o JSON aqui...'></textarea>
+      </div>
+      <div style="display:flex; gap:1rem; margin-top:1rem;">
+        <button onclick="importSheetsData()" class="btn-primary" style="flex:1;">
+          <i data-lucide="download" style="width:16px;height:16px;"></i> Importar Dados
+        </button>
+        <button onclick="closeSheetsSyncModal()" class="btn-outline" style="flex:1;">Cancelar</button>
+      </div>
     </div>
   </div>
 

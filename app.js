@@ -8,13 +8,14 @@ let state = {
   // Cap 3: Livro Caixa
   caixa: [],
 
-  // Cap 4: Dívidas (Credores)
+  // Cap 4: Dívidas (Credores) - baseado nos dados da planilha
   creditors: [
-    { id: 'solange', name: 'Titia Solange', initialVal: 1743.98, dueDay: 15, installment: 249.14 },
-    { id: 'mila', name: 'Mila', initialVal: 300.00, dueDay: 10, installment: 55.00 },
-    { id: 'vitinho', name: 'Vitinho', initialVal: 250.00, dueDay: 10, installment: 55.00 },
-    { id: 'papis', name: 'Papis', initialVal: 400.00, dueDay: 10, installment: 55.00 },
-    { id: 'chica', name: 'Madrinha Chica', initialVal: 350.00, dueDay: 10, installment: 55.00 }
+    { id: 'solange', name: 'Titia Solange', initialVal: 1743.98, dueDay: 15, dueType: 'fixed', installment: 249.14 },
+    { id: 'mila', name: 'Mila', initialVal: 1550.00, dueDay: 0, dueType: 'flexible', installment: 55.00 },
+    { id: 'vitinho', name: 'Vitinho', initialVal: 1141.23, dueDay: 0, dueType: 'flexible', installment: 55.00 },
+    { id: 'papis', name: 'Papis', initialVal: 340.00, dueDay: 0, dueType: 'flexible', installment: 55.00 },
+    { id: 'chica', name: 'Madrinha Chica', initialVal: 3000.00, dueDay: 0, dueType: 'flexible', installment: 55.00 },
+    { id: 'camila', name: 'Camila', initialVal: 1413.36, dueDay: 24, dueType: 'fixed', installment: 235.56 }
   ],
   debtPayments: [],
 
@@ -106,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
   populateCaixaTypeDropdown();
   renderAll();
   lucide.createIcons();
+  // Auto-rotate quotes carousel every 20 seconds
+  setInterval(() => { nextQuote(); }, 20000);
 });
 
 // ============================================================
@@ -311,9 +314,8 @@ function setupEventListeners() {
 
   // Cap 5: Reserva & Investimentos
   on('btn-add-inv', 'click', addInvestment);
-  on('filter-inv-asset', 'change', renderInvestments);
-  on('filter-inv-type', 'change', renderInvestments);
-  on('filter-inv-date', 'input', renderInvestments);
+  // Filtros de investimentos com botão de confirmação
+  on('btn-apply-inv-filter', 'click', renderInvestments);
 
   // Cap 6: Intercâmbio
   on('btn-save-exchange-dest', 'click', saveExchangeDest);
@@ -334,6 +336,15 @@ function setupEventListeners() {
   // Cap 9: Espaço Victor
   on('btn-add-vic-exp', 'click', addVictorExpense);
   on('btn-add-vic-cof', 'click', addVictorCofrinho);
+
+  // Campos dinâmicos para 'Outros' no Victor
+  const vicCat = document.getElementById('vic-cat');
+  if (vicCat) {
+    vicCat.addEventListener('change', function() {
+      const wrap = document.getElementById('vic-other-cat-wrap');
+      if (wrap) wrap.style.display = (this.value === 'Outros') ? 'block' : 'none';
+    });
+  }
 
   // Cap 10: Diário
   on('btn-save-learnings', 'click', () => {
@@ -357,6 +368,7 @@ function renderAll() {
   renderCaixinhas();
   renderCaixaTable();
   renderCaixaSummary();
+  renderOrcamentoTable();
   renderCreditorDropdown();
   renderDebtBalances();
   renderDebtHistory();
@@ -370,8 +382,6 @@ function renderAll() {
   renderVictorHistory();
   renderVictorChart();
   renderVictorCofrinhoTotal();
-  renderMoodboard();
-  renderGratitude();
 }
 
 // ============================================================
@@ -824,7 +834,16 @@ function renderCreditorDropdown() {
 function addOrEditCreditor() {
   const name = document.getElementById('creditor-name').value.trim();
   const initial = parseFloat(document.getElementById('creditor-initial-val').value) || 0;
-  const dueDay = parseInt(document.getElementById('creditor-due-day').value) || 10;
+  const dueTypeEl = document.getElementById('creditor-due-type');
+  const dueType = dueTypeEl ? dueTypeEl.value : 'fixed';
+  let dueDay = 0;
+  let dueDate = '';
+
+  if (dueType === 'fixed') {
+    dueDay = parseInt(document.getElementById('creditor-due-day').value) || 10;
+  } else if (dueType === 'date') {
+    dueDate = document.getElementById('creditor-due-date').value;
+  }
 
   if (!name || initial <= 0) {
     showToast('Insira o nome do credor e o valor inicial.');
@@ -835,6 +854,8 @@ function addOrEditCreditor() {
   if (existingIdx >= 0) {
     state.creditors[existingIdx].initialVal = initial;
     state.creditors[existingIdx].dueDay = dueDay;
+    state.creditors[existingIdx].dueType = dueType;
+    state.creditors[existingIdx].dueDate = dueDate;
     showToast(`Credor "${name}" atualizado.`);
   } else {
     state.creditors.push({
@@ -842,14 +863,18 @@ function addOrEditCreditor() {
       name,
       initialVal: initial,
       dueDay,
-      installment: Math.round(initial / 10 * 100) / 100 || 50 // default installment
+      dueType,
+      dueDate,
+      installment: Math.round(initial / 10 * 100) / 100 || 50
     });
     showToast(`Credor "${name}" adicionado.`);
   }
 
   document.getElementById('creditor-name').value = '';
   document.getElementById('creditor-initial-val').value = '';
-  document.getElementById('creditor-due-day').value = '10';
+  if (document.getElementById('creditor-due-day')) document.getElementById('creditor-due-day').value = '10';
+  if (document.getElementById('creditor-due-type')) document.getElementById('creditor-due-type').value = 'fixed';
+  toggleDueDayField();
 
   saveState();
   renderCreditorDropdown();
@@ -921,13 +946,23 @@ function renderDebtBalances() {
     const pct = initial > 0 ? Math.min(100, Math.round((payments / initial) * 100)) : 100;
     const color = balance <= 0 ? '#1b8a5a' : '#c0392b';
 
+    // Due label based on dueType
+    let dueLabel = '';
+    const dueType = c.dueType || 'fixed';
+    if (dueType === 'flexible') {
+      dueLabel = 'Quando tiver dinheiro 🔄';
+    } else if (dueType === 'date' && c.dueDate) {
+      dueLabel = `Data: ${fmtDate(c.dueDate)}`;
+    } else {
+      dueLabel = c.dueDay > 0 ? `Vence dia ${c.dueDay}` : 'Sem data';
+    }
     const div = document.createElement('div');
     div.style.cssText = 'background:var(--color-bg); padding:0.9rem; border-radius:var(--radius-sm); border:1px solid var(--color-border); position:relative;';
     div.innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
         <div>
           <strong style="color:var(--color-primary-dark); font-size:0.9rem;">${c.name}</strong>
-          <span style="font-size:0.75rem; color:var(--color-text-muted); display:block;">Inicial: ${fmt(initial)} | Vence dia ${c.dueDay}</span>
+          <span style="font-size:0.75rem; color:var(--color-text-muted); display:block;">Inicial: ${fmt(initial)} | ${dueLabel}</span>
         </div>
         <div style="text-align:right;">
           <span style="color:${color}; font-weight:700; font-size:0.95rem;">${balance <= 0 ? 'Quitada! 🎉' : fmt(balance)}</span>
