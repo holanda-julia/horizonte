@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase SDK (compat mode — compatível com script clássico, sem bundler) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-init.js"></script>
 </head>
 <body>
 
@@ -22,6 +27,13 @@
       <span class="header-logo">Projeto Horizonte</span>
       <span class="header-sub">Júlia Aragão — Gestão &amp; Metas</span>
     </div>
+    <!-- Indicador de sincronização com a nuvem -->
+    <div id="sync-status" title="Status de sincronização" style="display:flex; align-items:center; gap:0.4rem; font-size:0.75rem; color:rgba(255,255,255,0.7); padding:0.3rem 0.7rem; border-radius:20px; background:rgba(255,255,255,0.08); transition:all 0.3s;">
+      <i data-lucide="cloud" style="width:14px;height:14px;"></i>
+      <span id="sync-status-text">Conectando...</span>
+    </div>
+    <!-- Área do usuário (Avatar, Nome, Botão Sair) -->
+    <div id="user-header-area" style="display:flex; align-items:center; gap:0.6rem; margin-left:auto; margin-right:0.5rem;"></div>
     <button id="btn-export-backup" class="btn-header-action" title="Exportar Backup">
       <i data-lucide="download"></i>
     </button>

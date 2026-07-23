@@ -101,15 +101,72 @@ let activeCaixinhaId = null;
 // INITIALIZATION
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  loadState();
   setupSidebar();
   setupEventListeners();
   populateCaixaTypeDropdown();
-  renderAll();
   lucide.createIcons();
   // Auto-rotate quotes carousel every 20 seconds
   setInterval(() => { nextQuote(); }, 20000);
+
+  // Auth guard — redireciona para login se não autenticada
+  setSyncStatus('connecting');
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      // Não autenticada → vai para tela de login
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Usuária autenticada — exibe info no header e carrega dados
+    window._currentUserId = user.uid;
+    renderUserHeader(user);
+    await loadState();
+    renderAll();
+  });
 });
+
+// ============================================================
+// USER HEADER — Avatar + Nome + Botão Sair
+// ============================================================
+function renderUserHeader(user) {
+  const userArea = document.getElementById('user-header-area');
+  if (!userArea) return;
+
+  const displayName = user.displayName || user.email?.split('@')[0] || 'Usuária';
+  const photoURL    = user.photoURL;
+
+  const initial = displayName.charAt(0).toUpperCase();
+
+  userArea.innerHTML = `
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      ${photoURL
+        ? `<img src="${photoURL}" alt="${displayName}" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--color-accent);object-fit:cover;">`
+        : `<div style="width:32px;height:32px;border-radius:50%;background:var(--color-accent);color:var(--color-primary-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;">${initial}</div>`
+      }
+      <span style="font-size:0.8rem;color:rgba(255,255,255,0.75);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none;" id="user-name-label">${displayName}</span>
+    </div>
+    <button id="btn-sign-out" title="Sair" onclick="signOut()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.65);border-radius:8px;padding:0.35rem 0.65rem;cursor:pointer;font-size:0.75rem;display:flex;align-items:center;gap:0.3rem;transition:all 0.2s;">
+      <i data-lucide="log-out" style="width:14px;height:14px;"></i>
+    </button>
+  `;
+  lucide.createIcons();
+
+  // Mostra nome em telas maiores
+  if (window.innerWidth > 600) {
+    const nameLabel = document.getElementById('user-name-label');
+    if (nameLabel) nameLabel.style.display = 'block';
+  }
+}
+
+async function signOut() {
+  try {
+    await auth.signOut();
+    window.location.href = 'login.html';
+  } catch (err) {
+    console.error('[Auth] Erro ao sair:', err);
+    showToast('Erro ao sair. Tente novamente.');
+  }
+}
 
 // ============================================================
 // SIDEBAR MENU DRAWER
@@ -172,31 +229,113 @@ function switchRevendaTab(tabName, event) {
 }
 
 // ============================================================
+// SYNC STATUS INDICATOR
+// ============================================================
+function setSyncStatus(status) {
+  const badge = document.getElementById('sync-status');
+  const text  = document.getElementById('sync-status-text');
+  if (!badge || !text) return;
+
+  const states = {
+    connecting: { label: 'Conectando...', color: 'rgba(255,255,255,0.5)', icon: 'cloud' },
+    syncing:    { label: 'Salvando...',   color: '#f0c040',               icon: 'cloud-upload' },
+    synced:     { label: 'Salvo ☁️',      color: '#4ade80',               icon: 'cloud-check' },
+    offline:    { label: 'Offline',       color: '#f87171',               icon: 'cloud-off' },
+    error:      { label: 'Erro sync',     color: '#f87171',               icon: 'cloud-off' },
+  };
+
+  const s = states[status] || states.connecting;
+  text.textContent = s.label;
+  badge.style.color = s.color;
+  // Atualiza ícone Lucide dinamicamente
+  const iconEl = badge.querySelector('i[data-lucide]');
+  if (iconEl) {
+    iconEl.setAttribute('data-lucide', s.icon);
+    lucide.createIcons({ nodes: [iconEl] });
+  }
+}
+
+// ============================================================
 // LOCAL STORAGE
 // ============================================================
 const STORAGE_KEY_V3 = 'projeto_horizonte_v3';
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY_V3, JSON.stringify(state));
+// Referência ao documento do usuário no Firestore
+function getUserDocRef() {
+  if (!window.db || !window._currentUserId) return null;
+  return window.db
+    .collection('users')
+    .doc(window._currentUserId)
+    .collection('data')
+    .doc('appState');
 }
 
-function loadState() {
+async function saveState() {
+  // 1. Salva no localStorage (fallback imediato)
+  localStorage.setItem(STORAGE_KEY_V3, JSON.stringify(state));
+
+  // 2. Salva no Firestore (assíncrono)
+  const docRef = getUserDocRef();
+  if (!docRef) return;
+
+  setSyncStatus('syncing');
+  try {
+    await docRef.set({ state: state, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    setSyncStatus('synced');
+  } catch (err) {
+    console.error('[Firestore] Erro ao salvar:', err);
+    setSyncStatus('offline');
+  }
+}
+
+async function loadState() {
+  // 1. Tenta carregar do Firestore
+  const docRef = getUserDocRef();
+  if (docRef) {
+    try {
+      const snap = await docRef.get();
+      if (snap.exists && snap.data().state) {
+        const parsed = snap.data().state;
+        state = { ...state, ...parsed };
+        state.diary               = { ...state.diary,               ...parsed.diary };
+        state.config              = { ...state.config,              ...parsed.config };
+        state.exchangePlan        = { ...state.exchangePlan,        ...parsed.exchangePlan };
+        state.exchangeCosts       = { ...state.exchangeCosts,       ...parsed.exchangeCosts };
+        state.victorCofrinhoPlan  = { ...state.victorCofrinhoPlan,  ...parsed.victorCofrinhoPlan };
+
+        // Sincroniza também o localStorage
+        localStorage.setItem(STORAGE_KEY_V3, JSON.stringify(state));
+        setSyncStatus('synced');
+        _fillForms();
+        return;
+      }
+    } catch (err) {
+      console.warn('[Firestore] Falha ao carregar, usando localStorage:', err);
+      setSyncStatus('offline');
+    }
+  }
+
+  // 2. Fallback: carrega do localStorage
   try {
     const saved = localStorage.getItem(STORAGE_KEY_V3);
     if (saved) {
       const parsed = JSON.parse(saved);
       state = { ...state, ...parsed };
-      state.diary = { ...state.diary, ...parsed.diary };
-      state.config = { ...state.config, ...parsed.config };
-      state.exchangePlan = { ...state.exchangePlan, ...parsed.exchangePlan };
-      state.exchangeCosts = { ...state.exchangeCosts, ...parsed.exchangeCosts };
-      state.victorCofrinhoPlan = { ...state.victorCofrinhoPlan, ...parsed.victorCofrinhoPlan };
+      state.diary               = { ...state.diary,               ...parsed.diary };
+      state.config              = { ...state.config,              ...parsed.config };
+      state.exchangePlan        = { ...state.exchangePlan,        ...parsed.exchangePlan };
+      state.exchangeCosts       = { ...state.exchangeCosts,       ...parsed.exchangeCosts };
+      state.victorCofrinhoPlan  = { ...state.victorCofrinhoPlan,  ...parsed.victorCofrinhoPlan };
     }
   } catch (e) {
-    console.error('Erro ao carregar LocalStorage:', e);
+    console.error('Erro ao carregar localStorage:', e);
   }
-  
-  // Fill forms with saved configurations
+
+  _fillForms();
+}
+
+// Preenche os campos de formulário após carregar o estado
+function _fillForms() {
   const el = (id) => document.getElementById(id);
   if (el('career-notes')) el('career-notes').value = state.careerNotes || '';
   if (el('learnings-textarea')) el('learnings-textarea').value = state.diary.learnings || '';
