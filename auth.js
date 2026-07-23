@@ -3,13 +3,17 @@
 // Lógica de autenticação da tela de login
 // ============================================================
 
+const auth = window.auth;
+
 // ---- Redirecionamento se já estiver logado ----
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    // Usuária já autenticada — vai direto pro app
-    window.location.href = 'index.html';
-  }
-});
+if (auth) {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // Usuária já autenticada — vai direto pro app
+      window.location.href = 'index.html';
+    }
+  });
+}
 
 // ---- Troca de aba (Entrar / Cadastrar) ----
 function switchAuthTab(tab) {

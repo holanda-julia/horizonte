@@ -17,18 +17,27 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Expõe instâncias globais para uso em app.js
-window.db   = firebase.firestore();
-window.auth = firebase.auth();
+// Expõe instâncias globais para uso na aplicação
+if (typeof firebase.auth === 'function') {
+  window.auth = firebase.auth();
+} else {
+  console.error('[Firebase] SDK Auth não foi carregado.');
+}
 
-// Habilita persistência offline (mantém dados no IndexedDB localmente)
-window.db.enablePersistence({ synchronizeTabs: true })
-  .catch(err => {
-    if (err.code === 'failed-precondition') {
-      console.warn('[Firestore] Persistência offline não disponível (múltiplas abas abertas).');
-    } else if (err.code === 'unimplemented') {
-      console.warn('[Firestore] Persistência offline não suportada neste browser.');
-    }
-  });
+if (typeof firebase.firestore === 'function') {
+  window.db = firebase.firestore();
+
+  // Habilita persistência offline (mantém dados no IndexedDB localmente)
+  window.db.enablePersistence({ synchronizeTabs: true })
+    .catch(err => {
+      if (err.code === 'failed-precondition') {
+        console.warn('[Firestore] Persistência offline não disponível (múltiplas abas abertas).');
+      } else if (err.code === 'unimplemented') {
+        console.warn('[Firestore] Persistência offline não suportada neste browser.');
+      }
+    });
+} else {
+  window.db = null;
+}
 
 console.log('[Firebase] Inicializado com sucesso. Projeto:', firebaseConfig.projectId);
